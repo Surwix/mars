@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarsSpace.ai — Claim Your Land on Mars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mars-red: #c1440e;
+    --mars-orange: #e8622a;
+    --mars-dust: #d4856a;
+    --mars-dark: #0a0501;
+    --mars-surface: #120a04;
+    --mars-panel: #1a0f08;
+    --mars-border: #3d1f0f;
+    --mars-glow: #ff6b35;
+    --text-primary: #f5e6d3;
+    --text-secondary: #a0826d;
+    --text-dim: #5a3d2b;
+    --accent-green: #4ade80;
+    --citizen-gold: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--mars-dark);
+    color: var(--text-primary);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--mars-glow);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid var(--mars-orange);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    opacity: 0.6;
+  }
+
+  /* Starfield */
+  .starfield {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.1; }
+    to { opacity: 0.8; }
+  }
+
+  /* Noise overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.3;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(10,5,1,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    color: var(--mars-glow);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text-secondary); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--mars-glow); }
+  .nav-cta {
+    background: var(--mars-red);
+    color: var(--text-primary) !important;
+    padding: 8px 20px;
+    border: 1px solid var(--mars-orange);
+    transition: all 0.2s !important;
+  }
+  .nav-cta:hover {
+    background: var(--mars-orange) !important;
+    color: #fff !important;
+    box-shadow: 0 0 20px rgba(255,107,53,0.4);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--mars-orange);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--mars-border);
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .hero-title .line1 { color: var(--text-primary); display: block; }
+  .hero-title .line2 {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--mars-border);
+    display: block;
+  }
+  .hero-title .line3 {
+    color: var(--mars-orange);
+    display: block;
+    text-shadow: 0 0 60px rgba(232,98,42,0.5);
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    max-width: 480px;
+    line-height: 1.8;
+    margin: 32px auto 48px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--mars-red);
+    color: #fff;
+    padding: 16px 40px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: none;
+    cursor: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1));
+    transform: translateX(-100%);
+    transition: transform 0.4s;
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover {
+    background: var(--mars-orange);
+    box-shadow: 0 0 40px rgba(255,107,53,0.5), 0 0 80px rgba(255,107,53,0.2);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 16px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--mars-border);
+    cursor: none;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-secondary:hover {
+    border-color: var(--mars-orange);
+    color: var(--mars-orange);
+  }
+
+  /* Live counter */
+  .live-counter {
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
+  }
+  .counter-num {
+    color: var(--accent-green);
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+  }
+
+  /* Mars planet visual */
+  .mars-planet {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #e8622a, #c1440e 40%, #7a2000 70%, #3d0e00);
+    box-shadow:
+      inset -60px -40px 80px rgba(0,0,0,0.8),
+      0 0 60px rgba(193,68,14,0.2),
+      0 0 120px rgba(193,68,14,0.1);
+    opacity: 0.15;
+    animation: rotate 120s linear infinite;
+  }
+  @keyframes rotate { from { transform: translateY(-50%) rotate(0deg); } to { transform: translateY(-50%) rotate(360deg); } }
+
+  /* MARS MAP SECTION */
+  .section-map {
+    position: relative;
+    z-index: 2;
+    padding: 100px 40px;
+  }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--mars-orange);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .section-sub {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .map-container {
+    position: relative;
+    border: 1px solid var(--mars-border);
+    background: var(--mars-surface);
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .map-header {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--mars-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  .map-dots { display: flex; gap: 6px; }
+  .map-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .map-dot:nth-child(1) { background: #ff5f57; }
+  .map-dot:nth-child(2) { background: #febc2e; }
+  .map-dot:nth-child(3) { background: #28c840; }
+
+  #mars-map {
+    width: 100%;
+    height: 400px;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: #1a0800;
+  }
+
+  canvas#marsCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .map-overlay-info {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(10,5,1,0.85);
+    border: 1px solid var(--mars-border);
+    padding: 12px 16px;
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+    pointer-events: none;
+  }
+  .map-coords {
+    color: var(--mars-orange);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+  }
+
+  .map-tooltip {
+    position: absolute;
+    background: rgba(10,5,1,0.95);
+    border: 1px solid var(--mars-orange);
+    padding: 10px 14px;
+    font-size: 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+  }
+  .map-tooltip.visible { opacity: 1; }
+  .map-tooltip .tip-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: var(--mars-glow);
+    font-weight: 700;
+  }
+  .map-tooltip .tip-owner { color: var(--text-secondary); margin-top: 4px; }
+  .map-tooltip .tip-size { color: var(--text-dim); font-size: 9px; margin-top: 2px; }
+
+  /* PRICING */
+  .section-pricing {
+    position: relative;
+    z-index: 2;
+    padding: 100px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    border: 1px solid var(--mars-border);
+  }
+
+  .pricing-card {
+    background: var(--mars-surface);
+    padding: 40px 32px;
+    border-right: 1px solid var(--mars-border);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .pricing-card:last-child { border-right: none; }
+  .pricing-card:hover { background: var(--mars-panel); }
+  .pricing-card.featured {
+    background: var(--mars-panel);
+    border-top: 2px solid var(--mars-orange);
+  }
+  .pricing-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -1px;
+    right: 20px;
+    background: var(--mars-orange);
+    color: #fff;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    padding: 4px 10px;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .pricing-tier {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mars-orange);
+    margin-bottom: 20px;
+  }
+  .pricing-price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .pricing-price span { font-size: 20px; color: var(--text-secondary); }
+  .pricing-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .pricing-features { list-style: none; margin-bottom: 32px; }
+  .pricing-features li {
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--mars-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pricing-features li::before {
+    content: '→';
+    color: var(--mars-orange);
+    flex-shrink: 0;
+  }
+
+  /* CLAIM FORM */
+  .section-claim {
+    position: relative;
+    z-index: 2;
+    padding: 100px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .claim-form {
+    background: var(--mars-surface);
+    border: 1px solid var(--mars-border);
+    padding: 48px;
+    position: relative;
+  }
+  .claim-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--mars-red), var(--mars-orange), transparent);
+  }
+
+  .form-row { margin-bottom: 24px; }
+  .form-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--mars-dark);
+    border: 1px solid var(--mars-border);
+    color: var(--text-primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    cursor: none;
+  }
+  .form-input:focus { border-color: var(--mars-orange); }
+  .form-input::placeholder { color: var(--text-dim); }
+
+  .form-select {
+    width: 100%;
+    background: var(--mars-dark);
+    border: 1px solid var(--mars-border);
+    color: var(--text-primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    padding: 14px 16px;
+    outline: none;
+    cursor: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%23e8622a'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .citizen-preview {
+    background: var(--mars-dark);
+    border: 1px solid var(--mars-border);
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .citizen-num-preview {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--mars-glow);
+    line-height: 1;
+    min-width: 80px;
+    text-align: center;
+  }
+  .citizen-num-preview small {
+    display: block;
+    font-size: 8px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    margin-top: 4px;
+  }
+  .citizen-preview-info { font-size: 10px; color: var(--text-dim); line-height: 1.8; }
+  .citizen-preview-info strong { color: var(--text-secondary); }
+
+  /* CITIZENS */
+  .section-citizens {
+    position: relative;
+    z-index: 2;
+    padding: 100px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .citizens-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+    font-size: 11px;
+  }
+  .citizens-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--mars-border);
+  }
+  .citizens-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(61,31,15,0.4);
+    color: var(--text-secondary);
+    vertical-align: middle;
+  }
+  .citizens-table tr:hover td { background: rgba(232,98,42,0.03); }
+  .citizen-id-cell {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--mars-glow);
+  }
+  .citizen-badge {
+    display: inline-block;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    border: 1px solid var(--mars-border);
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .citizen-badge.founder {
+    border-color: var(--citizen-gold);
+    color: var(--citizen-gold);
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--mars-border);
+    padding: 60px 40px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .footer-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--mars-glow);
+    margin-bottom: 8px;
+  }
+  .footer-disclaimer {
+    font-size: 9px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 360px;
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--mars-orange); }
+
+  /* Scanner line animation */
+  @keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+  .scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,98,42,0.3), transparent);
+    animation: scan 4s linear infinite;
+    pointer-events: none;
+  }
+
+  /* Divider */
+  .divider {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 40px;
+    opacity: 0.3;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--mars-border);
+  }
+  .divider span { font-size: 9px; letter-spacing: 0.3em; color: var(--mars-orange); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--mars-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--mars-border); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .mars-planet { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .claim-form { padding: 28px 20px; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .section-pricing, .section-claim, .section-citizens { padding: 60px 20px; }
+    .section-map { padding: 60px 20px; }
+  }
+
+  /* Notification */
+  .notification {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--mars-panel);
+    border: 1px solid var(--mars-orange);
+    border-left: 3px solid var(--mars-orange);
+    padding: 16px 20px;
+    z-index: 200;
+    font-size: 11px;
+    max-width: 300px;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .notification.show { transform: translateX(0); }
+  .notif-title { font-family: 'Orbitron', sans-serif; font-size: 12px; color: var(--mars-glow); margin-bottom: 4px; }
+  .notif-body { color: var(--text-secondary); line-height: 1.5; }
+
+  /* Selection */
+  ::selection { background: var(--mars-red); color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="starfield" id="starfield"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">MARS<span>.SPACE</span></a>
+  <div class="nav-links">
+    <a href="#map">Territory Map</a>
+    <a href="#citizens">Citizens</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#claim" class="nav-cta">Claim Land →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="mars-planet"></div>
+
+  <div class="hero-eyebrow">Est. 2025 · First Private Mars Registry</div>
+
+  <h1 class="hero-title">
+    <span class="line1">CLAIM YOUR</span>
+    <span class="line2">TERRITORY</span>
+    <span class="line3">ON MARS</span>
+  </h1>
+
+  <p class="hero-sub">
+    The first planet is taken. The second one is yours.<br>
+    Register land on Mars before humanity arrives.<br>
+    Official certificate. Unique citizen number. Forever yours.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#claim" class="btn-primary">Claim Your Land</a>
+    <a href="#map" class="btn-secondary">View Territory Map</a>
+  </div>
+
+  <div class="live-counter">
+    <div class="live-dot"></div>
+    <span class="counter-num" id="liveCount">247</span>
+    <span>&nbsp;citizens registered · spots filling fast</span>
+  </div>
+</section>
+
+<div class="divider"><span>◆ TERRITORY MAP ◆</span></div>
+
+<!-- MAP -->
+<section class="section-map" id="map">
+  <div style="text-align:center; margin-bottom: 48px;">
+    <div class="section-label">Interactive Mars Surface</div>
+    <h2 class="section-title">Your Land on the<br>Red Planet</h2>
+    <p class="section-sub" style="margin: 0 auto;">
+      Based on NASA MOLA topographic data. Every parcel is unique — click to explore available territories and see who's already claimed their land.
+    </p>
+  </div>
+
+  <div class="map-container">
+    <div class="map-header">
+      <div class="map-dots">
+        <div class="map-dot"></div>
+        <div class="map-dot"></div>
+        <div class="map-dot"></div>
+      </div>
+      <span>MOLA Topographic Surface Data · Real-time Registry</span>
+      <span id="mapStatus">● LIVE</span>
+    </div>
+    <div id="mars-map" style="position:relative; cursor: none;">
+      <canvas id="marsCanvas"></canvas>
+      <div class="scan-line"></div>
+      <div class="map-overlay-info">
+        <div>NASA MOLA Data</div>
+        <div class="map-coords" id="mapCoords">0.00°N · 0.00°E</div>
+        <div style="margin-top:4px; font-size:9px;">Click to select parcel</div>
+      </div>
+      <div class="map-tooltip" id="mapTooltip">
+        <div class="tip-num" id="tipNum">#001</div>
+        <div class="tip-owner" id="tipOwner">Loading...</div>
+        <div class="tip-size" id="tipSize">100 km² · Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>◆ PRICING ◆</span></div>
+
+<!-- PRICING -->
+<section class="section-pricing" id="pricing">
+  <div class="section-label">Choose Your Territory</div>
+  <h2 class="section-title">Land Packages</h2>
+  <p class="section-sub">Every package includes a unique citizen number, digital certificate, and entry into the public Mars registry. One-time payment. No recurring fees.</p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-tier">Pioneer</div>
+      <div class="pricing-price"><span>$</span>9</div>
+      <div class="pricing-desc">Your first foothold on the red planet.</div>
+      <ul class="pricing-features">
+        <li>100 km² parcel</li>
+        <li>Unique citizen #</li>
+        <li>Digital certificate PDF</li>
+        <li>Public registry listing</li>
+      </ul>
+      <a href="#claim" class="btn-secondary" style="display:block; text-align:center;">Claim →</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-tier">Colonist</div>
+      <div class="pricing-price"><span>$</span>29</div>
+      <div class="pricing-desc">Premium territory with landmark proximity.</div>
+      <ul class="pricing-features">
+        <li>500 km² parcel</li>
+        <li>Unique citizen #</li>
+        <li>Premium certificate PDF</li>
+        <li>Public registry listing</li>
+        <li>Citizen T-Shirt (your #)</li>
+        <li>Digital passport</li>
+      </ul>
+      <a href="#claim" class="btn-primary" style="display:block; text-align:center;">Claim →</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-tier">Governor</div>
+      <div class="pricing-price"><span>$</span>99</div>
+      <div class="pricing-desc">Name a crater. Rule a region.</div>
+      <ul class="pricing-features">
+        <li>2,000 km² parcel</li>
+        <li>Low citizen # priority</li>
+        <li>Name a geographic feature</li>
+        <li>Framed physical certificate</li>
+        <li>Citizen T-Shirt (your #)</li>
+        <li>Governor digital passport</li>
+        <li>Founding Citizens page</li>
+      </ul>
+      <a href="#claim" class="btn-secondary" style="display:block; text-align:center;">Claim →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>◆ REGISTER ◆</span></div>
+
+<!-- CLAIM FORM -->
+<section class="section-claim" id="claim">
+  <div class="section-label">Register Now</div>
+  <h2 class="section-title">Claim Your Land</h2>
+  <p class="section-sub">Fill in your details. Your citizen number will be assigned immediately after payment. It's yours forever.</p>
+
+  <div class="claim-form">
+    <div class="citizen-preview">
+      <div class="citizen-num-preview">
+        #<span id="previewNum">248</span>
+        <small>YOUR NUMBER</small>
+      </div>
+      <div class="citizen-preview-info">
+        <strong>Next available:</strong> #<span id="nextNum">248</span><br>
+        <strong>Status:</strong> <span style="color: var(--accent-green);">Available</span><br>
+        <strong>Assigned after:</strong> Payment confirmed<br>
+        <strong>Transferable:</strong> Never — unique to you
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-input" placeholder="Elon" id="firstName">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-input" placeholder="Mars" id="lastName">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" placeholder="you@earth.com" id="email">
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Display Name (public registry)</label>
+      <input type="text" class="form-input" placeholder="E. Mars (shown publicly)" id="displayName">
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Package</label>
+      <select class="form-select" id="package">
+        <option value="pioneer">Pioneer — 100 km² — $9</option>
+        <option value="colonist" selected>Colonist — 500 km² — $29 (Most Popular)</option>
+        <option value="governor">Governor — 2,000 km² — $99</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Territory Region</label>
+      <select class="form-select" id="region">
+        <option value="olympus">Olympus Mons Region (+premium)</option>
+        <option value="valles" selected>Valles Marineris (Available)</option>
+        <option value="hellas">Hellas Basin (Available)</option>
+        <option value="tharsis">Tharsis Plateau (Available)</option>
+        <option value="arcadia">Arcadia Planitia (Available)</option>
+      </select>
+    </div>
+
+    <button class="btn-primary" style="width:100%; padding:18px; font-size:13px;" onclick="handleClaim()">
+      Proceed to Payment → Stripe
+    </button>
+
+    <div style="margin-top:16px; font-size:9px; color: var(--text-dim); text-align:center; line-height:1.8;">
+      Secured by Stripe · Certificate issued instantly after payment<br>
+      This is a novelty gift certificate. See disclaimer below.
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>◆ CITIZENS ◆</span></div>
+
+<!-- CITIZENS TABLE -->
+<section class="section-citizens" id="citizens">
+  <div class="section-label">Public Registry</div>
+  <h2 class="section-title">Mars Citizens</h2>
+  <p class="section-sub">The first humans to stake their claim on the Red Planet. Your name will appear here after registration.</p>
+
+  <table class="citizens-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Citizen</th>
+        <th>Territory</th>
+        <th>Size</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="citizensBody">
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">MARSSPACE.AI</div>
+    <div class="footer-disclaimer">
+      This is a novelty gift certificate and creative project. Land registration on Mars does not confer legal ownership under any current jurisdiction or the Outer Space Treaty (1967). MarsSpace.ai is not affiliated with NASA, SpaceX, or any government body. For entertainment and community purposes only.
+    </div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Terms</a>
+    <a href="#">Privacy</a>
+    <a href="#">Verify</a>
+    <a href="https://x.com/marsspace" target="_blank">X / Twitter</a>
+  </div>
+</footer>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification">
+  <div class="notif-title" id="notifTitle">New Citizen!</div>
+  <div class="notif-body" id="notifBody">Someone just claimed their land on Mars.</div>
+</div>
+
+<script>
+// === CURSOR ===
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 4 + 'px';
+  cursor.style.top = my - 4 + 'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) *.12;
+  ring.style.left = rx - 16 + 'px';
+  ring.style.top = ry - 16 + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// === STARS ===
+const sf = document.getElementById('starfield');
+for (let i = 0; i < 200; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2 + 0.5;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    top:${Math.random()*100}%;
+    --d:${2+Math.random()*4}s;
+    animation-delay:${Math.random()*4}s;
+  `;
+  sf.appendChild(s);
+}
+
+// === MARS MAP CANVAS ===
+const canvas = document.getElementById('marsCanvas');
+const ctx = canvas.getContext('2d');
+const mapEl = document.getElementById('mars-map');
+const tooltip = document.getElementById('mapTooltip');
+
+function resizeCanvas() {
+  canvas.width = mapEl.offsetWidth;
+  canvas.height = mapEl.offsetHeight;
+  drawMap();
+}
+
+// Mock claimed parcels
+const parcels = [
+  { id: 1, x: 0.12, y: 0.3, owner: 'A. Chen', status: 'claimed' },
+  { id: 2, x: 0.28, y: 0.55, owner: 'M. Rodriguez', status: 'claimed' },
+  { id: 3, x: 0.45, y: 0.2, owner: 'J. Park', status: 'claimed' },
+  { id: 4, x: 0.6, y: 0.65, owner: 'S. Williams', status: 'claimed' },
+  { id: 5, x: 0.75, y: 0.4, owner: 'K. Müller', status: 'claimed' },
+  { id: 6, x: 0.88, y: 0.7, owner: 'L. Ivanov', status: 'claimed' },
+  { id: 7, x: 0.35, y: 0.8, owner: 'T. Nakamura', status: 'claimed' },
+];
+
+function drawMap() {
+  const w = canvas.width, h = canvas.height;
+
+  // Mars surface gradient
+  const grad = ctx.createLinearGradient(0, 0, w, h);
+  grad.addColorStop(0, '#1a0800');
+  grad.addColorStop(0.3, '#2d1005');
+  grad.addColorStop(0.6, '#1f0a03');
+  grad.addColorStop(1, '#150600');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Terrain features (simplified MOLA-style)
+  for (let i = 0; i < 40; i++) {
+    const x = (i * 73 % w);
+    const y = (i * 47 % h);
+    const r = 20 + (i * 31 % 80);
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    const elev = i % 3;
+    if (elev === 0) {
+      g.addColorStop(0, 'rgba(193,68,14,0.15)');
+      g.addColorStop(1, 'transparent');
+    } else if (elev === 1) {
+      g.addColorStop(0, 'rgba(100,30,5,0.2)');
+      g.addColorStop(1, 'transparent');
+    } else {
+      g.addColorStop(0, 'rgba(232,98,42,0.08)');
+      g.addColorStop(1, 'transparent');
+    }
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(61,31,15,0.4)';
+  ctx.lineWidth = 0.5;
+  for (let x = 0; x < w; x += 60) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+  }
+  for (let y = 0; y < h; y += 60) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+  }
+
+  // Region labels
+  const regions = [
+    { name: 'OLYMPUS MONS', x: 0.15, y: 0.25 },
+    { name: 'VALLES MARINERIS', x: 0.45, y: 0.5 },
+    { name: 'HELLAS BASIN', x: 0.7, y: 0.75 },
+    { name: 'THARSIS', x: 0.25, y: 0.65 },
+  ];
+  ctx.font = '8px Space Mono, monospace';
+  ctx.fillStyle = 'rgba(90,61,43,0.7)';
+  ctx.letterSpacing = '0.2em';
+  regions.forEach(r => {
+    ctx.fillText(r.name, r.x * w, r.y * h);
+  });
+
+  // Claimed parcels
+  parcels.forEach(p => {
+    const px = p.x * w, py = p.y * h;
+    const size = 16;
+
+    // Glow
+    const glow = ctx.createRadialGradient(px, py, 0, px, py, size * 2);
+    glow.addColorStop(0, 'rgba(255,107,53,0.3)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.fillRect(px - size*2, py - size*2, size*4, size*4);
+
+    // Square marker
+    ctx.strokeStyle = 'rgba(255,107,53,0.8)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(px - size/2, py - size/2, size, size);
+    ctx.fillStyle = 'rgba(193,68,14,0.4)';
+    ctx.fillRect(px - size/2, py - size/2, size, size);
+
+    // Dot
+    ctx.fillStyle = '#ff6b35';
+    ctx.beginPath();
+    ctx.arc(px, py, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Number
+    ctx.font = 'bold 8px Orbitron, sans-serif';
+    ctx.fillStyle = '#ff6b35';
+    ctx.fillText('#' + String(p.id).padStart(3, '0'), px + 10, py - 4);
+  });
+}
+
+// Map interactions
+mapEl.addEventListener('mousemove', e => {
+  const rect = mapEl.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const lat = (0.5 - my / rect.height) * 90;
+  const lon = (mx / rect.width - 0.5) * 360;
+  document.getElementById('mapCoords').textContent =
+    `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'} · ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'W'}`;
+
+  // Check if near a parcel
+  let found = null;
+  parcels.forEach(p => {
+    const px = p.x * rect.width, py = p.y * rect.height;
+    if (Math.abs(mx - px) < 20 && Math.abs(my - py) < 20) found = p;
+  });
+
+  if (found) {
+    tooltip.style.left = (mx + 16) + 'px';
+    tooltip.style.top = (my - 20) + 'px';
+    document.getElementById('tipNum').textContent = '#' + String(found.id).padStart(3, '0');
+    document.getElementById('tipOwner').textContent = 'Owner: ' + found.owner;
+    document.getElementById('tipSize').textContent = '500 km² · Claimed';
+    tooltip.classList.add('visible');
+  } else {
+    tooltip.classList.remove('visible');
+  }
+});
+
+mapEl.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+mapEl.addEventListener('click', () => {
+  document.getElementById('claim').scrollIntoView({ behavior: 'smooth' });
+});
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// === CITIZENS TABLE ===
+const citizensData = [
+  { id: 1, name: 'A. Chen', region: 'Olympus Mons', size: '500 km²', badge: 'founder', date: '2025-03-01' },
+  { id: 2, name: 'M. Rodriguez', region: 'Valles Marineris', size: '100 km²', badge: 'founder', date: '2025-03-02' },
+  { id: 3, name: 'J. Park', region: 'Hellas Basin', size: '2,000 km²', badge: 'founder', date: '2025-03-05' },
+  { id: 4, name: 'S. Williams', region: 'Tharsis Plateau', size: '500 km²', badge: '', date: '2025-03-10' },
+  { id: 5, name: 'K. Müller', region: 'Arcadia Planitia', size: '100 km²', badge: '', date: '2025-03-14' },
+  { id: 6, name: 'L. Ivanov', region: 'Valles Marineris', size: '500 km²', badge: '', date: '2025-03-18' },
+  { id: 7, name: 'T. Nakamura', region: 'Olympus Mons', size: '2,000 km²', badge: '', date: '2025-03-22' },
+];
+
+const tbody = document.getElementById('citizensBody');
+citizensData.forEach(c => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><div class="citizen-id-cell">#${String(c.id).padStart(3,'0')}</div></td>
+    <td>${c.name} ${c.badge ? `<span class="citizen-badge ${c.badge}">Founder</span>` : ''}</td>
+    <td>${c.region}</td>
+    <td>${c.size}</td>
+    <td><span style="color: var(--accent-green); font-size:10px;">✓ Verified</span></td>
+    <td style="color: var(--text-dim);">${c.date}</td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// === LIVE COUNTER ===
+let count = 247;
+const countEl = document.getElementById('liveCount');
+const previewNum = document.getElementById('previewNum');
+const nextNum = document.getElementById('nextNum');
+
+function updateCounter() {
+  countEl.textContent = count;
+  previewNum.textContent = count + 1;
+  nextNum.textContent = count + 1;
+}
+updateCounter();
+
+// Simulate live registrations
+function simRegistration() {
+  const names = ['A. Kim', 'D. Okonkwo', 'F. Rossi', 'Y. Tanaka', 'B. Osei', 'C. Novak', 'H. Santos'];
+  const name = names[Math.floor(Math.random() * names.length)];
+  count++;
+  updateCounter();
+  showNotification('New Citizen #' + count, name + ' just claimed their land on Mars!');
+  setTimeout(simRegistration, 15000 + Math.random() * 30000);
+}
+setTimeout(simRegistration, 8000);
+
+// === NOTIFICATION ===
+const notif = document.getElementById('notification');
+function showNotification(title, body) {
+  document.getElementById('notifTitle').textContent = title;
+  document.getElementById('notifBody').textContent = body;
+  notif.classList.add('show');
+  setTimeout(() => notif.classList.remove('show'), 5000);
+}
+
+// === CLAIM FORM ===
+function handleClaim() {
+  const firstName = document.getElementById('firstName').value;
+  const email = document.getElementById('email').value;
+  if (!firstName || !email) {
+    showNotification('Fill in details', 'Please enter your name and email first.');
+    return;
+  }
+  // TODO: Connect to Stripe
+  // window.location.href = 'https://buy.stripe.com/YOUR_LINK';
+  showNotification('Redirecting...', 'Connecting to secure payment · Stripe');
+  setTimeout(() => {
+    alert('Connect your Stripe link here!\n\nReplace the TODO in handleClaim() with your Stripe payment link.');
+  }, 1000);
+}
+</script>
+</body>
+</html>
