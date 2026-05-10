@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mars Citizens Registry — MarsLand</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--red:#d94f1e;--orange:#f07832;--glow:#ff7f40;--gold:#f5a623;--dark:#080401;--surface:#110804;--panel:#1c0e07;--border:#3a1a0a;--text:#f2e0d0;--muted:#8a6555;--dim:#4a2e1e;--green:#3ecf7a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.star{position:absolute;background:#fff;border-radius:50%;animation:tw var(--d) infinite alternate;}
+@keyframes tw{from{opacity:.05}to{opacity:.6}}
+nav{position:sticky;top:0;z-index:100;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(8,4,1,.97);border-bottom:1px solid var(--border);}
+.logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:17px;color:var(--glow);text-decoration:none;}
+.logo span{color:var(--muted);}
+.nav-btn{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;padding:9px 16px;cursor:pointer;text-decoration:none;display:inline-block;}
+.main{position:relative;z-index:2;max-width:900px;margin:0 auto;padding:48px 20px 80px;}
+.tag{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+h1{font-family:'Orbitron',sans-serif;font-size:clamp(28px,6vw,52px);font-weight:700;line-height:1.1;margin-bottom:8px;}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:32px;line-height:1.6;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:32px;}
+.stat{background:var(--panel);border:1px solid var(--border);padding:18px 16px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:var(--glow);}
+.stat-label{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:.1em;}
+.filter-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:11px;padding:7px 14px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.filter-btn.active,.filter-btn:hover{border-color:var(--orange);color:var(--orange);}
+.search-bar{display:flex;margin-bottom:24px;}
+.search-inp{flex:1;background:var(--panel);border:1px solid var(--border);border-right:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 16px;outline:none;-webkit-appearance:none;border-radius:0;}
+.search-inp:focus{border-color:var(--orange);}
+.search-inp::placeholder{color:var(--dim);}
+.search-go{background:var(--panel);border:1px solid var(--border);color:var(--orange);padding:12px 16px;cursor:pointer;font-size:14px;}
+.citizens-table{width:100%;border-collapse:collapse;}
+.citizens-table th{text-align:left;padding:10px 14px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--border);}
+.citizens-table td{padding:13px 14px;border-bottom:1px solid rgba(58,26,10,.35);color:var(--muted);font-size:13px;vertical-align:middle;}
+.citizens-table tr:hover td{background:rgba(240,120,50,.03);}
+.c-id{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;color:var(--glow);}
+.c-badge{font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border:1px solid var(--border);color:var(--dim);margin-left:6px;}
+.c-badge.founder{border-color:var(--gold);color:var(--gold);}
+.verified{color:var(--green);font-size:12px;}
+.cta-bar{margin-top:40px;background:linear-gradient(135deg,rgba(193,68,14,.12),rgba(240,120,50,.06));border:1px solid rgba(240,120,50,.3);padding:24px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+.cta-text strong{display:block;font-size:16px;font-weight:600;margin-bottom:4px;}
+.cta-text span{font-size:12px;color:var(--muted);}
+.btn-main{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;padding:13px 22px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s;}
+.btn-main:hover{background:var(--orange);}
+footer{text-align:center;padding:24px 20px;font-size:10px;color:var(--dim);border-top:1px solid var(--border);position:relative;z-index:2;}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<nav>
+  <a href="index.html" class="logo">MARS<span>LAND</span></a>
+  <a href="index.html#claim" class="nav-btn">Claim Land →</a>
+</nav>
+<div class="main">
+  <div class="tag">Public Registry</div>
+  <h1>Mars Citizens</h1>
+  <p class="subtitle">The official registry of humanity's first Mars citizens.<br>Every entry is permanent, verified, and unique.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num" id="totalCount">247</div><div class="stat-label">Total Citizens</div></div>
+    <div class="stat"><div class="stat-num">47</div><div class="stat-label">Founding Citizens</div></div>
+    <div class="stat"><div class="stat-num">9,753</div><div class="stat-label">Spots Left</div></div>
+  </div>
+  <div class="search-bar">
+    <input type="text" class="search-inp" id="searchInp" placeholder="Search by name or citizen #..." oninput="filterTable()">
+    <button class="search-go">🔍</button>
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('founder',this)">Founders</button>
+    <button class="filter-btn" onclick="setFilter('olympus',this)">Olympus Mons</button>
+    <button class="filter-btn" onclick="setFilter('valles',this)">Valles Marineris</button>
+    <button class="filter-btn" onclick="setFilter('hellas',this)">Hellas Basin</button>
+  </div>
+  <table class="citizens-table" id="citizensTable">
+    <thead><tr><th>#</th><th>Citizen</th><th>Territory</th><th>Size</th><th>Status</th><th>Joined</th></tr></thead>
+    <tbody id="citizensBody"></tbody>
+  </table>
+  <div class="cta-bar">
+    <div class="cta-text"><strong>Your name should be here.</strong><span>Join 247 citizens who already claimed their land on Mars.</span></div>
+    <a href="index.html#claim" class="btn-main">Claim My Land →</a>
+  </div>
+</div>
+<footer>marslandspace.com · Public Mars Citizens Registry · All records are permanent</footer>
+<script>
+const sf=document.getElementById('stars');
+for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2+.5;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*5}s;animation-delay:${Math.random()*5}s;`;sf.appendChild(s);}
+
+const citizens=[
+  {id:1,name:'A. Chen',region:'Olympus Mons',size:'500 km²',badge:'founder',date:'2025-03-01'},
+  {id:2,name:'M. Rodriguez',region:'Valles Marineris',size:'100 km²',badge:'founder',date:'2025-03-02'},
+  {id:3,name:'J. Park',region:'Hellas Basin',size:'2,000 km²',badge:'founder',date:'2025-03-05'},
+  {id:4,name:'S. Williams',region:'Tharsis Plateau',size:'500 km²',badge:'founder',date:'2025-03-10'},
+  {id:5,name:'K. Müller',region:'Arcadia Planitia',size:'100 km²',badge:'founder',date:'2025-03-14'},
+  {id:6,name:'L. Ivanov',region:'Valles Marineris',size:'500 km²',badge:'founder',date:'2025-03-18'},
+  {id:7,name:'T. Nakamura',region:'Olympus Mons',size:'2,000 km²',badge:'founder',date:'2025-03-22'},
+  {id:8,name:'Y. Tanaka',region:'Hellas Basin',size:'100 km²',badge:'',date:'2025-03-28'},
+  {id:9,name:'B. Osei',region:'Valles Marineris',size:'500 km²',badge:'',date:'2025-04-01'},
+  {id:10,name:'C. Novak',region:'Olympus Mons',size:'100 km²',badge:'',date:'2025-04-03'},
+  {id:11,name:'R. Patel',region:'Tharsis Plateau',size:'500 km²',badge:'',date:'2025-04-07'},
+  {id:12,name:'H. Zhang',region:'Arcadia Planitia',size:'100 km²',badge:'',date:'2025-04-09'},
+  {id:13,name:'F. Rossi',region:'Valles Marineris',size:'2,000 km²',badge:'',date:'2025-04-12'},
+  {id:14,name:'D. Okonkwo',region:'Hellas Basin',size:'500 km²',badge:'',date:'2025-04-15'},
+  {id:15,name:'N. Santos',region:'Olympus Mons',size:'100 km²',badge:'',date:'2025-04-18'},
+];
+
+let currentFilter='all';
+function render(data){
+  const tbody=document.getElementById('citizensBody');
+  tbody.innerHTML='';
+  data.forEach(c=>{
+    tbody.innerHTML+=`<tr>
+      <td><span class="c-id">#${String(c.id).padStart(3,'0')}</span></td>
+      <td><span style="color:var(--text)">${c.name}</span>${c.badge?`<span class="c-badge founder">Founder</span>`:''}</td>
+      <td>${c.region}</td>
+      <td>${c.size}</td>
+      <td><span class="verified">✓ Verified</span></td>
+      <td style="color:var(--dim)">${c.date}</td>
+    </tr>`;
+  });
+}
+render(citizens);
+
+function setFilter(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filterTable();
+}
+function filterTable(){
+  const q=document.getElementById('searchInp').value.toLowerCase();
+  let data=citizens;
+  if(currentFilter==='founder')data=data.filter(c=>c.badge==='founder');
+  else if(currentFilter!=='all')data=data.filter(c=>c.region.toLowerCase().includes(currentFilter));
+  if(q)data=data.filter(c=>c.name.toLowerCase().includes(q)||String(c.id).includes(q));
+  render(data);
+}
+</script>
+</body>
+</html>

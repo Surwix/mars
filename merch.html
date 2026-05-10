@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mars Merch — MarsLand</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--red:#d94f1e;--orange:#f07832;--glow:#ff7f40;--gold:#f5a623;--dark:#080401;--panel:#1c0e07;--border:#3a1a0a;--text:#f2e0d0;--muted:#8a6555;--dim:#4a2e1e;--green:#3ecf7a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.star{position:absolute;background:#fff;border-radius:50%;animation:tw var(--d) infinite alternate;}
+@keyframes tw{from{opacity:.05}to{opacity:.6}}
+nav{position:sticky;top:0;z-index:100;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(8,4,1,.97);border-bottom:1px solid var(--border);}
+.logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:17px;color:var(--glow);text-decoration:none;}
+.logo span{color:var(--muted);}
+.nav-btn{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;padding:9px 16px;cursor:pointer;text-decoration:none;display:inline-block;}
+.main{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:48px 20px 80px;}
+.tag{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+h1{font-family:'Orbitron',sans-serif;font-size:clamp(28px,6vw,52px);font-weight:700;line-height:1.1;margin-bottom:8px;}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:40px;line-height:1.6;max-width:480px;}
+.hero-note{background:rgba(240,120,50,.08);border:1px solid rgba(240,120,50,.25);padding:14px 18px;margin-bottom:36px;font-size:12px;color:var(--orange);line-height:1.6;}
+.merch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(min-width:600px){.merch-grid{grid-template-columns:repeat(3,1fr);}}
+.merch-card{background:var(--panel);border:1px solid var(--border);padding:0;transition:all .3s;overflow:hidden;}
+.merch-card:hover{border-color:var(--orange);transform:translateY(-3px);}
+.merch-card.featured{border-color:var(--orange);border-top:2px solid var(--orange);}
+.merch-img{background:var(--dark);height:160px;display:flex;align-items:center;justify-content:center;font-size:56px;position:relative;border-bottom:1px solid var(--border);}
+@media(min-width:600px){.merch-img{height:200px;font-size:72px;}}
+.merch-tag{position:absolute;top:10px;right:10px;background:var(--orange);color:#fff;font-size:8px;letter-spacing:.15em;padding:3px 8px;font-family:'Orbitron',sans-serif;}
+.merch-body{padding:18px 16px;}
+.merch-name{font-size:14px;font-weight:600;margin-bottom:4px;}
+.merch-desc{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.merch-price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.merch-price{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--glow);}
+.merch-orig{font-size:11px;color:var(--dim);text-decoration:line-through;}
+.merch-select{width:100%;background:var(--dark);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;-webkit-appearance:none;border-radius:0;margin-bottom:10px;cursor:pointer;}
+.merch-select:focus{border-color:var(--orange);}
+.merch-btn{width:100%;background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;padding:12px;cursor:pointer;transition:background .2s;}
+.merch-btn:hover{background:var(--orange);}
+.bundle{background:linear-gradient(135deg,rgba(193,68,14,.12),rgba(240,120,50,.06));border:1px solid rgba(240,120,50,.4);padding:28px 24px;margin-top:24px;display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:600px){.bundle{grid-template-columns:1fr auto;align-items:center;}}
+.bundle-text strong{display:block;font-size:18px;font-weight:700;margin-bottom:6px;}
+.bundle-text span{font-size:12px;color:var(--muted);line-height:1.6;}
+.bundle-items{font-size:11px;color:var(--muted);margin-top:8px;line-height:2;}
+.bundle-items span{color:var(--text);}
+.bundle-price{text-align:right;}
+.bundle-price .price{font-family:'Orbitron',sans-serif;font-size:40px;font-weight:900;color:var(--glow);}
+.bundle-price .was{font-size:12px;color:var(--dim);text-decoration:line-through;margin-bottom:8px;}
+.btn-main{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;padding:14px 24px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s;white-space:nowrap;}
+.btn-main:hover{background:var(--orange);}
+.print-note{background:var(--panel);border:1px solid var(--border);padding:18px 20px;margin-top:24px;font-size:12px;color:var(--muted);line-height:1.7;}
+.print-note strong{color:var(--text);display:block;margin-bottom:6px;}
+footer{text-align:center;padding:24px 20px;font-size:10px;color:var(--dim);border-top:1px solid var(--border);position:relative;z-index:2;}
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(8,4,1,.97);border-top:1px solid var(--border);padding:10px 16px;display:block;}
+@media(min-width:600px){.sticky-cta{display:none;}}
+.sticky-inner{display:flex;gap:10px;align-items:center;}
+.sticky-text{font-size:12px;color:var(--muted);flex:1;line-height:1.3;}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<nav>
+  <a href="index.html" class="logo">MARS<span>LAND</span></a>
+  <a href="index.html#claim" class="nav-btn">Claim Land →</a>
+</nav>
+<div class="main">
+  <div class="tag">Official Mars Merch</div>
+  <h1>Wear Your<br>Citizen Number</h1>
+  <p class="subtitle">Every item is personalized with your unique Mars citizen number. Printed on demand via Printful. Ships to 195 countries.</p>
+  <div class="hero-note">⚠️ You need a citizen number first. <a href="index.html#claim" style="color:var(--glow);text-decoration:none;">Claim your land →</a> then return here to order your merch with your unique number.</div>
+
+  <div class="merch-grid">
+    <div class="merch-card featured">
+      <div class="merch-img">👕<div class="merch-tag">BEST SELLER</div></div>
+      <div class="merch-body">
+        <div class="merch-name">Citizen T-Shirt</div>
+        <div class="merch-desc">Your citizen # printed large on the chest. 100% cotton. Unisex fit.</div>
+        <div class="merch-price-row"><div class="merch-price">$32</div><div class="merch-orig">$38</div></div>
+        <select class="merch-select"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+        <button class="merch-btn" onclick="addToCart('T-Shirt','$32')">Add to Cart →</button>
+      </div>
+    </div>
+    <div class="merch-card">
+      <div class="merch-img">🧥</div>
+      <div class="merch-body">
+        <div class="merch-name">Mars Hoodie</div>
+        <div class="merch-desc">Heavy-weight 380gsm pullover hoodie. Your # on chest, MARSLAND on back.</div>
+        <div class="merch-price-row"><div class="merch-price">$58</div><div class="merch-orig">$68</div></div>
+        <select class="merch-select"><option>Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+        <button class="merch-btn" onclick="addToCart('Hoodie','$58')">Add to Cart →</button>
+      </div>
+    </div>
+    <div class="merch-card">
+      <div class="merch-img">🧢</div>
+      <div class="merch-body">
+        <div class="merch-name">Colony Cap</div>
+        <div class="merch-desc">Embroidered citizen number. Structured 6-panel. Adjustable strap.</div>
+        <div class="merch-price-row"><div class="merch-price">$28</div><div class="merch-orig">$32</div></div>
+        <select class="merch-select"><option>One Size</option></select>
+        <button class="merch-btn" onclick="addToCart('Cap','$28')">Add to Cart →</button>
+      </div>
+    </div>
+    <div class="merch-card">
+      <div class="merch-img">🖼️</div>
+      <div class="merch-body">
+        <div class="merch-name">Framed Certificate</div>
+        <div class="merch-desc">Your official Mars certificate printed on premium paper, professionally framed. Ready to hang.</div>
+        <div class="merch-price-row"><div class="merch-price">$49</div><div class="merch-orig">$59</div></div>
+        <select class="merch-select"><option>A4 Frame (21×30cm)</option><option>A3 Frame (30×42cm)</option></select>
+        <button class="merch-btn" onclick="addToCart('Framed Certificate','$49')">Add to Cart →</button>
+      </div>
+    </div>
+    <div class="merch-card">
+      <div class="merch-img">📔</div>
+      <div class="merch-body">
+        <div class="merch-name">Mars Passport</div>
+        <div class="merch-desc">Physical passport booklet with your citizen number, photo page, and Mars territory stamps.</div>
+        <div class="merch-price-row"><div class="merch-price">$19</div><div class="merch-orig">$24</div></div>
+        <select class="merch-select"><option>Standard</option></select>
+        <button class="merch-btn" onclick="addToCart('Passport','$19')">Add to Cart →</button>
+      </div>
+    </div>
+    <div class="merch-card">
+      <div class="merch-img">☕</div>
+      <div class="merch-body">
+        <div class="merch-name">Mars Mug</div>
+        <div class="merch-desc">11oz ceramic mug. Your citizen # on one side, Mars map on the other. Microwave safe.</div>
+        <div class="merch-price-row"><div class="merch-price">$18</div><div class="merch-orig">$22</div></div>
+        <select class="merch-select"><option>11oz</option></select>
+        <button class="merch-btn" onclick="addToCart('Mug','$18')">Add to Cart →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bundle -->
+  <div class="bundle">
+    <div class="bundle-text">
+      <strong>📦 Full Colony Kit — Best Value</strong>
+      <span>Everything you need to feel like a real Mars citizen.</span>
+      <div class="bundle-items">
+        <span>✓</span> Citizen T-Shirt &nbsp;·&nbsp; <span>✓</span> Mars Hoodie &nbsp;·&nbsp; <span>✓</span> Colony Cap<br>
+        <span>✓</span> Framed Certificate &nbsp;·&nbsp; <span>✓</span> Mars Passport &nbsp;·&nbsp; <span>✓</span> Mars Mug
+      </div>
+    </div>
+    <div class="bundle-price">
+      <div class="was">was $204</div>
+      <div class="price">$99</div>
+      <button class="btn-main" onclick="addToCart('Colony Kit','$99')">Get the Kit →</button>
+    </div>
+  </div>
+
+  <div class="print-note">
+    <strong>🖨️ How personalization works</strong>
+    After checkout, enter your citizen number. Printful prints your item on demand within 2–5 business days and ships directly to you. We never hold inventory. Every item is made just for you.
+  </div>
+</div>
+
+<div class="sticky-cta">
+  <div class="sticky-inner">
+    <div class="sticky-text">T-Shirts from $32<br><span style="color:var(--dim)">with your citizen #</span></div>
+    <a href="index.html#claim" class="btn-main" style="font-size:11px;padding:11px 16px;">Get Citizen # First →</a>
+  </div>
+</div>
+
+<footer>marslandspace.com · Official Mars Merch · Printed on demand by Printful · Ships worldwide</footer>
+<script>
+const sf=document.getElementById('stars');
+for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2+.5;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*5}s;animation-delay:${Math.random()*5}s;`;sf.appendChild(s);}
+function addToCart(item,price){
+  // TODO: Connect to Printful or Stripe
+  alert(`Adding ${item} (${price}) to cart.\n\nConnect this button to Printful or your Stripe payment link.`);
+}
+</script>
+</body>
+</html>
