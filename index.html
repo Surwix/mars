@@ -4,189 +4,215 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>MarsLand — Claim Your Land on Mars</title>
+<meta name="description" content="Register your land on Mars before humanity arrives. Unique citizen number. Official certificate. From $9.">
+<meta property="og:title" content="MarsLand — Claim Your Land on Mars">
+<meta property="og:description" content="The first private Mars territory registry. 10,000 spots only.">
+<meta property="og:image" content="https://marslandspace.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--red:#d94f1e;--orange:#f07832;--glow:#ff7f40;--gold:#f5a623;--dark:#080401;--surface:#110804;--panel:#1c0e07;--border:#3a1a0a;--text:#f2e0d0;--muted:#8a6555;--dim:#4a2e1e;--green:#3ecf7a;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16px;}
 ::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--border);}
 .stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;background:#fff;border-radius:50%;animation:tw var(--d) infinite alternate;}
 @keyframes tw{from{opacity:.05}to{opacity:.7}}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(8,4,1,.97),transparent);}
-.logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:17px;color:var(--glow);text-decoration:none;letter-spacing:.08em;}
+.logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:18px;color:var(--glow);text-decoration:none;letter-spacing:.08em;}
 .logo span{color:var(--muted);}
-.nav-btn{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:.15em;padding:10px 18px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s;}
+.nav-btn{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;padding:11px 20px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s;}
 .nav-btn:hover{background:var(--orange);}
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 20px 80px;z-index:2;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:6px 14px;font-size:11px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:28px;}
-.badge-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0;}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 24px 80px;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:7px 16px;font-size:13px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;}
+.badge-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(62,207,122,.4)}50%{box-shadow:0 0 0 8px rgba(62,207,122,0)}}
-.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(38px,10vw,108px);font-weight:900;line-height:.92;letter-spacing:-.02em;margin-bottom:24px;}
+.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(42px,11vw,112px);font-weight:900;line-height:.92;letter-spacing:-.02em;margin-bottom:24px;}
 .t1{display:block;color:var(--text);}
 .t2{display:block;color:transparent;-webkit-text-stroke:1px var(--dim);}
 .t3{display:block;color:var(--orange);text-shadow:0 0 60px rgba(240,120,50,.5);}
-.hero-sub{font-size:clamp(14px,3.5vw,17px);color:var(--muted);max-width:400px;line-height:1.7;margin:0 auto 36px;}
-.scarcity{background:var(--panel);border:1px solid var(--border);padding:14px 20px;margin-bottom:28px;width:100%;max-width:380px;}
-.scarcity-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:8px;}
-.scarcity-top strong{color:var(--orange);font-family:'Orbitron',sans-serif;font-size:12px;}
+.hero-sub{font-size:clamp(16px,3.5vw,19px);color:var(--muted);max-width:420px;line-height:1.7;margin:0 auto 36px;}
+.scarcity{background:var(--panel);border:1px solid var(--border);padding:16px 20px;margin-bottom:28px;width:100%;max-width:380px;}
+.scarcity-top{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px;}
+.scarcity-top strong{color:var(--orange);font-family:'Orbitron',sans-serif;font-size:13px;}
 .progress{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--orange));width:2.47%;transition:width 2s;}
-.scarcity-note{font-size:10px;color:var(--dim);margin-top:6px;text-align:center;}
+.scarcity-note{font-size:12px;color:var(--dim);margin-top:6px;text-align:center;}
 .cta-group{display:flex;flex-direction:column;gap:10px;width:100%;max-width:340px;}
-.btn-main{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;padding:17px 28px;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .3s;}
+.btn-main{background:var(--red);color:#fff;border:none;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;padding:18px 28px;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .3s;}
 .btn-main:hover{background:var(--orange);box-shadow:0 0 36px rgba(255,127,64,.45);transform:translateY(-1px);}
-.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);font-size:12px;letter-spacing:.08em;padding:13px 28px;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .3s;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);font-size:13px;letter-spacing:.08em;padding:14px 28px;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .3s;}
 .btn-ghost:hover{border-color:var(--orange);color:var(--orange);}
 .trust-row{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px;flex-wrap:wrap;}
-.trust-item{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:4px;}
+.trust-item{font-size:13px;color:var(--dim);display:flex;align-items:center;gap:5px;}
 .trust-item span{color:var(--green);}
-.ticker{position:relative;z-index:2;background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 0;overflow:hidden;}
+.ticker{position:relative;z-index:2;background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden;}
 .ticker-inner{display:flex;gap:48px;white-space:nowrap;animation:tick 35s linear infinite;}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.tick-item{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.tick-item strong{color:var(--orange);font-family:'Orbitron',sans-serif;font-size:11px;}
-.tick-dot{width:4px;height:4px;background:var(--green);border-radius:50%;}
-.section{position:relative;z-index:2;padding:72px 20px;}
+.tick-item{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.tick-item strong{color:var(--orange);font-family:'Orbitron',sans-serif;font-size:12px;}
+.tick-dot{width:5px;height:5px;background:var(--green);border-radius:50%;}
+.section{position:relative;z-index:2;padding:72px 24px;}
 .section-inner{max-width:900px;margin:0 auto;}
-.section-tag{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
-.section-h{font-family:'Orbitron',sans-serif;font-size:clamp(22px,5vw,42px);font-weight:700;line-height:1.1;margin-bottom:14px;}
-.section-p{color:var(--muted);font-size:14px;line-height:1.7;max-width:480px;}
-.steps{display:grid;grid-template-columns:1fr;gap:2px;margin-top:36px;}
-@media(min-width:600px){.steps{grid-template-columns:repeat(3,1fr);}}
-.step{background:var(--panel);border:1px solid var(--border);padding:28px 22px;transition:border-color .3s;}
-.step:hover{border-color:var(--red);}
-.step-num{font-family:'Orbitron',sans-serif;font-size:44px;font-weight:900;color:var(--dim);line-height:1;margin-bottom:14px;}
-.step-title{font-size:15px;font-weight:600;margin-bottom:7px;}
-.step-desc{font-size:12px;color:var(--muted);line-height:1.6;}
-.map-wrap{position:relative;border:1px solid var(--border);background:var(--surface);overflow:hidden;margin-top:36px;}
-.map-bar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-.map-dots{display:flex;gap:5px;}
-.mdot{width:8px;height:8px;border-radius:50%;}
-.map-label{font-size:10px;color:var(--dim);letter-spacing:.08em;}
-.map-live{font-size:10px;color:var(--green);display:flex;align-items:center;gap:5px;}
-.map-canvas-wrap{position:relative;width:100%;height:240px;overflow:hidden;}
-@media(min-width:600px){.map-canvas-wrap{height:360px;}}
-#mc{width:100%;height:100%;display:block;}
-.scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(240,120,50,.2),transparent);animation:scan 5s linear infinite;}
-@keyframes scan{from{top:0}to{top:100%}}
-.map-info{position:absolute;top:12px;left:12px;background:rgba(8,4,1,.88);border:1px solid var(--border);padding:10px 12px;font-size:10px;color:var(--muted);line-height:1.8;pointer-events:none;}
-.map-coords{color:var(--orange);font-family:'Orbitron',sans-serif;font-size:10px;}
-.map-cta{padding:14px 16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
-.map-cta-text{font-size:11px;color:var(--muted);}
-.map-cta-text strong{color:var(--text);display:block;font-size:13px;}
+.section-tag{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+.section-h{font-family:'Orbitron',sans-serif;font-size:clamp(24px,5vw,44px);font-weight:700;line-height:1.1;margin-bottom:14px;}
+.section-p{color:var(--muted);font-size:15px;line-height:1.7;max-width:480px;}
+
+/* PREMIUM NUMBERS */
+.premium-section{position:relative;z-index:2;padding:72px 24px;background:linear-gradient(135deg,rgba(193,68,14,.06),rgba(240,120,50,.03));}
+.premium-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:36px;}
+@media(min-width:600px){.premium-grid{grid-template-columns:repeat(3,1fr);}}
+.premium-tier{background:var(--panel);border:1px solid var(--border);padding:0;overflow:hidden;transition:all .3s;}
+.premium-tier:hover{border-color:var(--orange);transform:translateY(-2px);}
+.premium-tier.elite{border-color:var(--gold);border-top:3px solid var(--gold);}
+.premium-tier.premium-t{border-top:2px solid var(--orange);}
+.tier-header{padding:20px 20px 16px;border-bottom:1px solid var(--border);}
+.tier-name{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;}
+.tier-name.elite{color:var(--gold);}
+.tier-name.premium-t{color:var(--orange);}
+.tier-name.select{color:var(--muted);}
+.tier-range{font-size:13px;color:var(--muted);}
+.tier-price{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;color:var(--text);margin-top:8px;}
+.tier-price sup{font-size:16px;color:var(--muted);}
+.tier-body{padding:16px 20px;}
+.tier-numbers{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;max-height:100px;overflow-y:auto;}
+.num-btn{
+  background:var(--dark);border:1px solid var(--border);
+  color:var(--muted);font-family:'Orbitron',sans-serif;
+  font-size:11px;padding:5px 8px;cursor:pointer;transition:all .2s;
+}
+.num-btn:hover,.num-btn.selected{background:var(--red);border-color:var(--red);color:#fff;}
+.num-btn.sold{background:transparent;border-color:var(--dim);color:var(--dim);cursor:not-allowed;text-decoration:line-through;}
+.tier-note{font-size:12px;color:var(--dim);line-height:1.5;margin-bottom:14px;}
+
+/* STANDARD PACKAGES */
 .plans{display:grid;grid-template-columns:1fr;gap:10px;margin-top:36px;}
 @media(min-width:600px){.plans{grid-template-columns:repeat(3,1fr);gap:2px;}}
 .plan{background:var(--panel);border:1px solid var(--border);padding:28px 22px;position:relative;transition:all .3s;}
 .plan:hover{border-color:var(--red);transform:translateY(-2px);}
 .plan.hot{border-color:var(--orange);border-top:3px solid var(--orange);}
 .plan-tag{position:absolute;top:-1px;right:16px;background:var(--orange);color:#fff;font-size:8px;letter-spacing:.18em;padding:3px 9px;font-family:'Orbitron',sans-serif;}
-.plan-tier{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;}
-.plan-price{font-family:'Orbitron',sans-serif;font-size:48px;font-weight:900;line-height:1;color:var(--text);margin-bottom:4px;}
-.plan-price sup{font-size:18px;color:var(--muted);}
-.plan-orig{font-size:11px;color:var(--dim);text-decoration:line-through;margin-bottom:18px;}
+.plan-tier{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;}
+.plan-price{font-family:'Orbitron',sans-serif;font-size:52px;font-weight:900;line-height:1;color:var(--text);margin-bottom:4px;}
+.plan-price sup{font-size:20px;color:var(--muted);}
+.plan-orig{font-size:12px;color:var(--dim);text-decoration:line-through;margin-bottom:18px;}
 .plan-features{list-style:none;margin-bottom:24px;}
-.plan-features li{font-size:12px;color:var(--muted);padding:8px 0;border-bottom:1px solid rgba(58,26,10,.5);display:flex;align-items:flex-start;gap:7px;line-height:1.4;}
+.plan-features li{font-size:14px;color:var(--muted);padding:9px 0;border-bottom:1px solid rgba(58,26,10,.5);display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
 .plan-features li::before{content:'→';color:var(--orange);flex-shrink:0;}
 .plan-features li.gold::before{content:'★';color:var(--gold);}
-.cert-preview{background:var(--panel);border:1px solid var(--border);padding:28px 20px;margin-top:36px;position:relative;overflow:hidden;}
-.cert-preview::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold),var(--orange));}
-.cert-inner{border:1px solid var(--border);padding:24px 20px;background:linear-gradient(135deg,#1c0e07,#120800);position:relative;overflow:hidden;}
-.cert-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);font-family:'Orbitron',sans-serif;font-size:clamp(28px,8vw,56px);font-weight:900;color:rgba(193,68,14,.06);letter-spacing:.2em;pointer-events:none;white-space:nowrap;}
-.cert-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:18px;}
-.cert-logo-text{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:var(--glow);}
-.cert-subtitle{font-size:8px;color:var(--muted);letter-spacing:.12em;margin-top:2px;}
-.cert-num{font-family:'Orbitron',sans-serif;font-size:clamp(24px,7vw,44px);font-weight:900;color:var(--glow);text-align:right;}
-.cert-num small{display:block;font-size:8px;color:var(--muted);letter-spacing:.15em;margin-top:2px;}
-.cert-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:14px 0;}
-.cert-body{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:11px;}
-.cert-field label{display:block;font-size:8px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;margin-bottom:3px;}
-.cert-field span{color:var(--text);font-size:12px;}
-.cert-footer-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:14px;gap:10px;flex-wrap:wrap;}
-.cert-hash{font-size:7px;color:var(--dim);font-family:'Orbitron',sans-serif;word-break:break-all;flex:1;}
-.cert-qr{width:52px;height:52px;background:var(--dark);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:7px;color:var(--dim);text-align:center;flex-shrink:0;}
-.form-box{background:var(--panel);border:1px solid var(--border);padding:28px 20px;position:relative;margin-top:36px;}
+
+/* FORM */
+.form-box{background:var(--panel);border:1px solid var(--border);padding:32px 24px;position:relative;margin-top:36px;}
 .form-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--orange),transparent);}
-.next-citizen{background:var(--dark);border:1px solid var(--border);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
-.nc-num{font-family:'Orbitron',sans-serif;font-size:clamp(26px,7vw,38px);font-weight:900;color:var(--glow);line-height:1;flex-shrink:0;}
-.nc-num small{display:block;font-size:8px;color:var(--dim);letter-spacing:.12em;margin-top:3px;}
-.nc-info{font-size:11px;color:var(--dim);line-height:1.9;}
-.nc-info strong{color:var(--muted);}
-.nc-status{color:var(--green)!important;}
-.form-row{margin-bottom:14px;}
-.form-label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-.form-input,.form-select{width:100%;background:var(--dark);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 15px;outline:none;transition:border-color .2s;-webkit-appearance:none;border-radius:0;}
+.selected-number-display{background:var(--dark);border:1px solid var(--border);padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;}
+.snd-num{font-family:'Orbitron',sans-serif;font-size:clamp(28px,7vw,44px);font-weight:900;color:var(--glow);line-height:1;flex-shrink:0;}
+.snd-num small{display:block;font-size:9px;color:var(--dim);letter-spacing:.12em;margin-top:3px;}
+.snd-info{font-size:13px;color:var(--dim);line-height:1.9;}
+.snd-info strong{color:var(--muted);}
+.snd-tier{display:inline-block;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--border);margin-top:4px;}
+.snd-tier.elite{border-color:var(--gold);color:var(--gold);}
+.snd-tier.standard{border-color:var(--border);color:var(--muted);}
+.form-row{margin-bottom:16px;}
+.form-label{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.form-input,.form-select{width:100%;background:var(--dark);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;padding:14px 16px;outline:none;transition:border-color .2s;-webkit-appearance:none;border-radius:0;}
 .form-input:focus,.form-select:focus{border-color:var(--orange);}
 .form-input::placeholder{color:var(--dim);}
 .form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%23f07832'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.urgency-note{background:rgba(217,79,30,.1);border:1px solid rgba(217,79,30,.3);padding:11px 14px;margin-bottom:18px;font-size:12px;color:var(--orange);line-height:1.6;display:flex;gap:8px;}
-.form-disclaimer{font-size:10px;color:var(--dim);text-align:center;line-height:1.7;margin-top:10px;}
-.upsell{background:linear-gradient(135deg,rgba(193,68,14,.12),rgba(240,120,50,.06));border:1px solid rgba(240,120,50,.3);padding:22px 20px;margin-top:36px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
-.upsell-text strong{display:block;font-size:15px;font-weight:600;margin-bottom:3px;}
-.upsell-text span{font-size:12px;color:var(--muted);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.urgency-note{background:rgba(217,79,30,.1);border:1px solid rgba(217,79,30,.3);padding:13px 16px;margin-bottom:20px;font-size:14px;color:var(--orange);line-height:1.6;display:flex;gap:8px;}
+.form-disclaimer{font-size:11px;color:var(--dim);text-align:center;line-height:1.7;margin-top:12px;}
+.price-summary{background:var(--dark);border:1px solid var(--border);padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
+.price-summary-label{font-size:13px;color:var(--muted);}
+.price-summary-amount{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--glow);}
+
+/* MAP */
+.map-wrap{position:relative;border:1px solid var(--border);background:var(--surface);overflow:hidden;margin-top:36px;}
+.map-bar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.map-dots{display:flex;gap:5px;}
+.mdot{width:8px;height:8px;border-radius:50%;}
+.map-label{font-size:11px;color:var(--dim);letter-spacing:.08em;}
+.map-live{font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px;}
+.map-canvas-wrap{position:relative;width:100%;height:240px;overflow:hidden;touch-action:pan-y;}
+@media(min-width:600px){.map-canvas-wrap{height:360px;}}
+#mc{width:100%;height:100%;display:block;}
+.scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(240,120,50,.2),transparent);animation:scan 5s linear infinite;}
+@keyframes scan{from{top:0}to{top:100%}}
+.map-info{position:absolute;top:12px;left:12px;background:rgba(8,4,1,.88);border:1px solid var(--border);padding:10px 14px;font-size:12px;color:var(--muted);line-height:1.8;pointer-events:none;}
+.map-coords{color:var(--orange);font-family:'Orbitron',sans-serif;font-size:11px;}
+.map-cta{padding:14px 18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+.map-cta-text{font-size:13px;color:var(--muted);}
+.map-cta-text strong{color:var(--text);display:block;font-size:14px;}
+
+/* CITIZENS */
 .citizens-list{margin-top:28px;border:1px solid var(--border);}
-.citizen-row{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;padding:13px 15px;border-bottom:1px solid rgba(58,26,10,.4);transition:background .2s;}
+.citizen-row{display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(58,26,10,.4);transition:background .2s;}
 .citizen-row:hover{background:rgba(240,120,50,.03);}
 .citizen-row:last-child{border-bottom:none;}
-.c-id{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--glow);}
-.c-name{font-size:13px;color:var(--text);}
-.c-region{font-size:10px;color:var(--muted);margin-top:2px;}
+.c-id{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;color:var(--glow);}
+.c-name{font-size:14px;color:var(--text);}
+.c-region{font-size:12px;color:var(--muted);margin-top:2px;}
 .c-badge{font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--border);color:var(--dim);}
 .c-badge.founder{border-color:var(--gold);color:var(--gold);}
-.citizens-more{padding:14px;text-align:center;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
-.citizens-more a{color:var(--orange);text-decoration:none;}
-.merch-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:36px;}
-@media(min-width:600px){.merch-grid{grid-template-columns:repeat(3,1fr);}}
-.merch-card{background:var(--panel);border:1px solid var(--border);padding:22px 14px;text-align:center;transition:all .3s;cursor:pointer;}
-.merch-card:hover{border-color:var(--orange);transform:translateY(-2px);}
-.merch-icon{font-size:32px;margin-bottom:10px;}
-.merch-name{font-size:13px;font-weight:600;margin-bottom:4px;}
-.merch-price{font-family:'Orbitron',sans-serif;font-size:15px;color:var(--orange);}
-.merch-sub{font-size:10px;color:var(--dim);margin-top:3px;}
+
+/* QUOTES */
 .quotes{display:grid;grid-template-columns:1fr;gap:10px;margin-top:36px;}
 @media(min-width:600px){.quotes{grid-template-columns:repeat(3,1fr);}}
-.quote-card{background:var(--panel);border:1px solid var(--border);padding:22px;}
-.quote-text{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:14px;font-style:italic;}
-.quote-author{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:7px;}
-.quote-num{font-family:'Orbitron',sans-serif;font-size:10px;color:var(--glow);}
+.quote-card{background:var(--panel);border:1px solid var(--border);padding:24px;}
+.quote-text{font-size:15px;color:var(--text);line-height:1.6;margin-bottom:14px;font-style:italic;}
+.quote-author{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px;}
+.quote-num{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--glow);}
+
+/* FAQ */
 .faqs{margin-top:36px;}
 .faq{border-bottom:1px solid var(--border);}
-.faq-q{padding:17px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500;cursor:pointer;gap:14px;}
+.faq-q{padding:18px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:500;cursor:pointer;gap:14px;line-height:1.4;}
 .faq-q:hover{color:var(--orange);}
-.faq-icon{color:var(--orange);font-size:18px;flex-shrink:0;transition:transform .3s;}
-.faq-a{font-size:13px;color:var(--muted);line-height:1.7;padding-bottom:16px;display:none;}
+.faq-icon{color:var(--orange);font-size:20px;flex-shrink:0;transition:transform .3s;}
+.faq-a{font-size:14px;color:var(--muted);line-height:1.7;padding-bottom:18px;display:none;}
 .faq.open .faq-a{display:block;}
 .faq.open .faq-icon{transform:rotate(45deg);}
-footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:44px 20px 100px;}
-@media(min-width:600px){footer{padding-bottom:40px;}}
+
+/* FOOTER */
+footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:44px 24px 100px;}
+@media(min-width:600px){footer{padding-bottom:44px;}}
 .footer-inner{max-width:900px;margin:0 auto;}
-.footer-grid{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:36px;}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:32px;}
 @media(min-width:600px){.footer-grid{grid-template-columns:2fr 1fr 1fr;}}
-.footer-logo{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;color:var(--glow);margin-bottom:10px;}
-.footer-desc{font-size:12px;color:var(--dim);line-height:1.7;}
-.footer-col h4{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-.footer-col a{display:block;font-size:13px;color:var(--dim);text-decoration:none;margin-bottom:7px;transition:color .2s;}
+.footer-logo{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;color:var(--glow);margin-bottom:10px;}
+.footer-desc{font-size:13px;color:var(--dim);line-height:1.7;}
+.footer-col h4{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.footer-col a{display:block;font-size:14px;color:var(--dim);text-decoration:none;margin-bottom:8px;transition:color .2s;}
 .footer-col a:hover{color:var(--orange);}
-.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:20px;border-top:1px solid var(--border);font-size:10px;color:var(--dim);}
-.footer-disclaimer{font-size:9px;color:var(--dim);line-height:1.7;margin-top:14px;}
-.sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(8,4,1,.97);border-top:1px solid var(--border);padding:10px 16px;display:block;}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:20px;border-top:1px solid var(--border);font-size:11px;color:var(--dim);}
+.footer-disclaimer{font-size:10px;color:var(--dim);line-height:1.7;margin-top:14px;}
+
+/* STICKY CTA */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(8,4,1,.97);border-top:1px solid var(--border);padding:10px 16px;}
 @media(min-width:600px){.sticky-cta{display:none;}}
 .sticky-inner{display:flex;gap:10px;align-items:center;}
-.sticky-price{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--glow);flex-shrink:0;line-height:1.2;}
-.sticky-price small{display:block;font-size:8px;color:var(--dim);}
-.notif{position:fixed;bottom:80px;right:16px;background:var(--panel);border:1px solid var(--orange);border-left:3px solid var(--orange);padding:13px 16px;z-index:200;max-width:260px;transform:translateX(120%);transition:transform .4s cubic-bezier(.16,1,.3,1);}
-@media(min-width:600px){.notif{bottom:24px;right:24px;max-width:280px;}}
+.sticky-price{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--glow);flex-shrink:0;line-height:1.2;}
+.sticky-price small{display:block;font-size:9px;color:var(--dim);}
+
+/* NOTIFICATION */
+.notif{position:fixed;bottom:80px;right:16px;background:var(--panel);border:1px solid var(--orange);border-left:3px solid var(--orange);padding:14px 18px;z-index:200;max-width:270px;transform:translateX(120%);transition:transform .4s cubic-bezier(.16,1,.3,1);}
+@media(min-width:600px){.notif{bottom:24px;right:24px;}}
 .notif.show{transform:translateX(0);}
-.notif-title{font-family:'Orbitron',sans-serif;font-size:10px;color:var(--glow);margin-bottom:3px;}
-.notif-body{font-size:11px;color:var(--muted);line-height:1.5;}
-.divider{position:relative;z-index:2;display:flex;align-items:center;gap:14px;padding:0 20px;opacity:.3;}
+.notif-title{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--glow);margin-bottom:3px;}
+.notif-body{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* DIVIDER */
+.divider{position:relative;z-index:2;display:flex;align-items:center;gap:14px;padding:0 24px;opacity:.3;}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
-.divider span{font-size:9px;letter-spacing:.25em;color:var(--orange);white-space:nowrap;}
+.divider span{font-size:10px;letter-spacing:.25em;color:var(--orange);white-space:nowrap;}
+
+/* ERROR */
+.form-error{background:rgba(217,79,30,.15);border:1px solid rgba(217,79,30,.4);padding:10px 14px;font-size:13px;color:var(--orange);margin-bottom:14px;display:none;}
+.form-error.show{display:block;}
+
 .fade-up{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
+.loading{opacity:.5;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -199,17 +225,17 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:44
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge"><div class="badge-dot"></div><span id="liveCount">247</span>&nbsp;citizens registered · Live</div>
+  <div class="hero-badge"><div class="badge-dot"></div><span id="liveCount">...</span>&nbsp;citizens registered · Live</div>
   <h1 class="hero-title"><span class="t1">CLAIM YOUR</span><span class="t2">TERRITORY</span><span class="t3">ON MARS</span></h1>
-  <p class="hero-sub">Humanity is going to Mars.<br>The first 10,000 citizens get their land registered forever.<br><strong style="color:var(--text)">Your number. Your coordinates. Your certificate.</strong></p>
+  <p class="hero-sub">Humanity is going to Mars. The first 10,000 citizens get their land registered forever.<br><strong style="color:var(--text)">Your number. Your coordinates. Your certificate.</strong></p>
   <div class="scarcity">
-    <div class="scarcity-top"><span>Early-bird spots claimed</span><strong id="spotsLeft">9,753 left</strong></div>
+    <div class="scarcity-top"><span>Early-bird spots claimed</span><strong id="spotsLeft">...</strong></div>
     <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
     <div class="scarcity-note">⚡ 3 people claimed land in the last hour</div>
   </div>
   <div class="cta-group">
     <a href="#claim" class="btn-main">Claim My Land on Mars — from $9</a>
-    <a href="#map" class="btn-ghost">View Territory Map</a>
+    <a href="#premium" class="btn-ghost">View Premium Numbers (#001–#100)</a>
   </div>
   <div class="trust-row">
     <div class="trust-item"><span>✓</span> Unique citizen #</div>
@@ -222,257 +248,255 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:44
 <!-- TICKER -->
 <div class="ticker"><div class="ticker-inner" id="tickerInner"></div></div>
 
-<!-- HOW IT WORKS -->
-<section class="section">
+<!-- PREMIUM NUMBERS -->
+<section class="premium-section" id="premium">
   <div class="section-inner">
-    <div class="section-tag">How it works</div>
-    <h2 class="section-h">Three Steps to<br>Own Mars</h2>
-    <div class="steps fade-up">
-      <div class="step"><div class="step-num">01</div><div class="step-title">Choose Territory</div><div class="step-desc">Pick a region on the interactive Mars map based on NASA MOLA topographic data. Every parcel is unique — once claimed, it's gone forever.</div></div>
-      <div class="step"><div class="step-num">02</div><div class="step-title">Get Your Number</div><div class="step-desc">After payment, you instantly receive your unique citizen number. Encrypted, verified, and recorded in the public Mars registry forever.</div></div>
-      <div class="step"><div class="step-num">03</div><div class="step-title">Get Certificate</div><div class="step-desc">Your official certificate with GPS coordinates, QR verification, and SHA-256 authenticity hash. Frame it. Gift it. Keep it forever.</div></div>
+    <div class="section-tag">Exclusive Numbers</div>
+    <h2 class="section-h">Own a Low Number.<br>Own a Piece of History.</h2>
+    <p class="section-p">Numbers #001–#100 are limited and priced by rarity. Once gone, they're gone forever. Standard numbers (#101+) are assigned automatically from $9.</p>
+
+    <div class="premium-grid fade-up" id="premiumGrid">
+      <!-- Loaded from API -->
+      <div class="premium-tier elite">
+        <div class="tier-header">
+          <div class="tier-name elite">Elite</div>
+          <div class="tier-range">#001 — #010 · 10 spots only</div>
+          <div class="tier-price"><sup>$</sup>1,000</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-numbers" id="eliteNumbers"></div>
+          <div class="tier-note">Lowest possible citizen numbers. The #001 of Mars. Frame-worthy forever.</div>
+          <div class="btn-ghost" onclick="scrollToClaim()" style="text-align:center;cursor:pointer;font-size:12px;padding:10px;">Select a number above →</div>
+        </div>
+      </div>
+      <div class="premium-tier premium-t">
+        <div class="tier-header">
+          <div class="tier-name premium-t">Premium</div>
+          <div class="tier-range">#011 — #050 · 40 spots</div>
+          <div class="tier-price"><sup>$</sup>500</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-numbers" id="premiumNumbers"></div>
+          <div class="tier-note">Double-digit founding citizen. A number worth bragging about.</div>
+          <div class="btn-ghost" onclick="scrollToClaim()" style="text-align:center;cursor:pointer;font-size:12px;padding:10px;">Select a number above →</div>
+        </div>
+      </div>
+      <div class="premium-tier">
+        <div class="tier-header">
+          <div class="tier-name select">Select</div>
+          <div class="tier-range">#051 — #100 · 50 spots</div>
+          <div class="tier-price"><sup>$</sup>199</div>
+        </div>
+        <div class="tier-body">
+          <div class="tier-numbers" id="selectNumbers"></div>
+          <div class="tier-note">Still in the first 100. Still a founding citizen. Still rare.</div>
+          <div class="btn-ghost" onclick="scrollToClaim()" style="text-align:center;cursor:pointer;font-size:12px;padding:10px;">Select a number above →</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="divider"><span>◆ TERRITORY MAP ◆</span></div>
+<div class="divider"><span>◆ STANDARD PACKAGES ◆</span></div>
 
-<!-- MAP -->
-<section class="section" id="map">
-  <div class="section-inner">
-    <div class="section-tag">Interactive Map</div>
-    <h2 class="section-h">Your Land on the<br>Red Planet</h2>
-    <p class="section-p">NASA MOLA surface data. Orange markers = claimed. Tap anywhere to claim yours.</p>
-    <div class="map-wrap fade-up">
-      <div class="map-bar">
-        <div class="map-dots"><div class="mdot" style="background:#ff5f57"></div><div class="mdot" style="background:#febc2e"></div><div class="mdot" style="background:#28c840"></div></div>
-        <div class="map-label">NASA MOLA Data</div>
-        <div class="map-live"><div class="badge-dot"></div>LIVE</div>
-      </div>
-      <div class="map-canvas-wrap" id="mapWrap">
-        <canvas id="mc"></canvas>
-        <div class="scan"></div>
-        <div class="map-info"><div>NASA MOLA</div><div class="map-coords" id="coords">TAP TO EXPLORE</div><div style="font-size:9px;margin-top:3px;color:var(--dim)">Tap to claim</div></div>
-      </div>
-      <div class="map-cta">
-        <div class="map-cta-text"><strong>247 parcels claimed · 9,753 available</strong>Tap the map to select your territory</div>
-        <a href="#claim" class="btn-main" style="font-size:11px;padding:11px 18px;white-space:nowrap;">Claim →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"><span>◆ PRICING ◆</span></div>
-
-<!-- PRICING -->
+<!-- STANDARD PACKAGES -->
 <section class="section" id="pricing">
   <div class="section-inner">
-    <div class="section-tag">Land Packages</div>
-    <h2 class="section-h">Choose Your<br>Territory</h2>
-    <p class="section-p">One-time payment. No subscriptions. Your land, your number, forever.</p>
+    <div class="section-tag">Standard Packages · #101 and above</div>
+    <h2 class="section-h">Choose Your<br>Territory Size</h2>
+    <p class="section-p">Your number is assigned automatically after payment. One-time. No subscriptions.</p>
     <div class="plans fade-up">
-      <div class="plan">
+      <div class="plan" onclick="selectStandardPkg('pioneer',9)">
         <div class="plan-tier">Pioneer</div>
         <div class="plan-price"><sup>$</sup>9</div>
         <div class="plan-orig">was $19</div>
         <ul class="plan-features">
           <li>100 km² parcel on Mars</li>
-          <li>Unique citizen number</li>
+          <li>Unique citizen number (#101+)</li>
           <li>Digital certificate PDF</li>
           <li>Public registry listing</li>
-          <li>QR verification code</li>
+          <li>QR + SHA-256 verification</li>
         </ul>
-        <a href="#claim" class="btn-ghost" style="display:block;text-align:center;">Select →</a>
+        <div class="btn-ghost" style="text-align:center;">Select →</div>
       </div>
-      <div class="plan hot">
+      <div class="plan hot" onclick="selectStandardPkg('colonist',29)">
         <div class="plan-tag">MOST POPULAR</div>
         <div class="plan-tier">Colonist</div>
         <div class="plan-price"><sup>$</sup>29</div>
         <div class="plan-orig">was $59</div>
         <ul class="plan-features">
           <li>500 km² premium parcel</li>
-          <li>Low citizen number priority</li>
+          <li>Unique citizen number (#101+)</li>
           <li>Premium certificate PDF</li>
           <li>Digital passport</li>
           <li class="gold">Citizen T-Shirt with your #</li>
           <li class="gold">Public registry profile</li>
-          <li>QR + SHA-256 hash</li>
+          <li>QR + SHA-256 verification</li>
         </ul>
-        <a href="#claim" class="btn-main" style="display:block;text-align:center;">Select →</a>
+        <div class="btn-main" style="text-align:center;">Select →</div>
       </div>
-      <div class="plan">
+      <div class="plan" onclick="selectStandardPkg('governor',99)">
         <div class="plan-tier">Governor</div>
         <div class="plan-price"><sup>$</sup>99</div>
         <div class="plan-orig">was $149</div>
         <ul class="plan-features">
           <li>2,000 km² large territory</li>
-          <li>Priority low citizen number</li>
+          <li>Priority lower citizen number</li>
           <li>Name a crater or feature</li>
           <li class="gold">Framed physical certificate</li>
           <li class="gold">Governor T-Shirt + hoodie</li>
           <li class="gold">Founding Citizens page</li>
           <li>Featured on territory map</li>
         </ul>
-        <a href="#claim" class="btn-ghost" style="display:block;text-align:center;">Select →</a>
+        <div class="btn-ghost" style="text-align:center;">Select →</div>
       </div>
-    </div>
-    <div class="upsell fade-up">
-      <div class="upsell-text"><strong>🎁 Perfect Gift for Space Fans</strong><span>Gift a parcel on Mars — we'll email the certificate directly to them.</span></div>
-      <a href="#claim" class="btn-main" style="font-size:11px;padding:11px 18px;white-space:nowrap;">Gift It →</a>
     </div>
   </div>
 </section>
 
-<div class="divider"><span>◆ YOUR CERTIFICATE ◆</span></div>
-
-<!-- CERT PREVIEW -->
-<section class="section" id="cert">
-  <div class="section-inner">
-    <div class="section-tag">Certificate Preview</div>
-    <h2 class="section-h">Your Official<br>Mars Title</h2>
-    <p class="section-p">Watermark + QR verification + SHA-256 hash. No two certificates alike.</p>
-    <div class="cert-preview fade-up">
-      <div class="cert-inner">
-        <div class="cert-wm">MARSLAND</div>
-        <div class="cert-top">
-          <div><div class="cert-logo-text">MARSLAND</div><div class="cert-subtitle">OFFICIAL TERRITORY CERTIFICATE · MARS REGISTRY</div></div>
-          <div class="cert-num">#<span id="certNum">248</span><small>CITIZEN NUMBER</small></div>
-        </div>
-        <div class="cert-divider"></div>
-        <div class="cert-body">
-          <div class="cert-field"><label>Citizen Name</label><span id="certName">Your Name</span></div>
-          <div class="cert-field"><label>Territory</label><span>Valles Marineris</span></div>
-          <div class="cert-field"><label>Coordinates</label><span>13.9°S · 59.2°W</span></div>
-          <div class="cert-field"><label>Parcel Size</label><span>500 km²</span></div>
-        </div>
-        <div class="cert-footer-row">
-          <div class="cert-hash">SHA-256: a3f8c2d1e9b7f4a2c8d3e1f9b6a7c2d4e8f1b3a9c5d7e2f4b8a1c6d3e9f2b5</div>
-          <div class="cert-qr">QR<br>CODE</div>
-        </div>
-      </div>
-      <div style="margin-top:14px;font-size:10px;color:var(--dim);text-align:center;line-height:1.7;">Watermark · QR verification · SHA-256 authenticity · Verify at marslandspace.com/verify/[number]</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"><span>◆ REGISTER ◆</span></div>
+<div class="divider"><span>◆ CLAIM YOUR LAND ◆</span></div>
 
 <!-- CLAIM FORM -->
 <section class="section" id="claim">
   <div class="section-inner" style="max-width:580px;">
-    <div class="section-tag">Claim Now</div>
-    <h2 class="section-h">Register Your<br>Land on Mars</h2>
+    <div class="section-tag">Register Now</div>
+    <h2 class="section-h">Claim Your<br>Land on Mars</h2>
+
     <div class="form-box fade-up">
-      <div class="next-citizen">
-        <div class="nc-num">#<span id="nextNum">248</span><small>YOUR NUMBER</small></div>
-        <div class="nc-info"><strong>Next available:</strong> #<span id="nextNum2">248</span><br><strong>Status:</strong> <span class="nc-status">Available ✓</span><br><strong>Assigned after:</strong> Payment confirmed</div>
+      <!-- Selected number display -->
+      <div class="selected-number-display">
+        <div class="snd-num">#<span id="selectedNumDisplay">?</span><small>YOUR NUMBER</small></div>
+        <div class="snd-info">
+          <strong>Selected:</strong> <span id="selectedNumLabel">Choose above</span><br>
+          <strong>Status:</strong> <span style="color:var(--green)">Available ✓</span><br>
+          <span class="snd-tier standard" id="selectedTierBadge">Standard</span>
+        </div>
       </div>
-      <div class="urgency-note">⚡ <span>Prices increase after first 500 citizens. <strong id="urgCount">247</strong>/500 early-bird spots taken.</span></div>
+
+      <div class="urgency-note">⚡ <span>Premium numbers #001–#100 sell first. Standard spots fill fast after launch.</span></div>
+
+      <div class="form-error" id="formError"></div>
+
       <div class="form-grid">
-        <div class="form-row"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="Elon" id="firstName"></div>
-        <div class="form-row"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Mars" id="lastName"></div>
+        <div class="form-row"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="Elon" id="firstName" autocomplete="given-name"></div>
+        <div class="form-row"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Mars" id="lastName" autocomplete="family-name"></div>
       </div>
-      <div class="form-row"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="you@earth.com" id="email"></div>
-      <div class="form-row"><label class="form-label">Display Name (public)</label><input type="text" class="form-input" placeholder="E. Mars" id="display" oninput="document.getElementById('certName').textContent=this.value||'Your Name'"></div>
-      <div class="form-row"><label class="form-label">Package</label>
-        <select class="form-select" id="pkg" onchange="document.getElementById('btnPrice').textContent=this.value">
-          <option value="9">Pioneer — 100 km² — $9 (Launch Price)</option>
-          <option value="29" selected>Colonist — 500 km² + T-Shirt — $29 ⭐</option>
-          <option value="99">Governor — 2,000 km² + Physical Cert — $99</option>
+      <div class="form-row"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="you@earth.com" id="email" autocomplete="email"></div>
+      <div class="form-row"><label class="form-label">Display Name (shown publicly)</label><input type="text" class="form-input" placeholder="E. Mars" id="display"></div>
+      <div class="form-row" id="pkgRow">
+        <label class="form-label">Package (Standard numbers only)</label>
+        <select class="form-select" id="pkg" onchange="updatePrice()">
+          <option value="pioneer" data-price="9">Pioneer — 100 km² — $9</option>
+          <option value="colonist" data-price="29" selected>Colonist — 500 km² + T-Shirt — $29 ⭐</option>
+          <option value="governor" data-price="99">Governor — 2,000 km² + Physical Cert — $99</option>
         </select>
       </div>
       <div class="form-row"><label class="form-label">Territory Region</label>
-        <select class="form-select">
-          <option>Valles Marineris</option><option>Olympus Mons Region</option><option>Hellas Basin</option><option>Tharsis Plateau</option><option>Arcadia Planitia</option>
+        <select class="form-select" id="region">
+          <option>Valles Marineris</option>
+          <option>Olympus Mons Region</option>
+          <option>Hellas Basin</option>
+          <option>Tharsis Plateau</option>
+          <option>Arcadia Planitia</option>
         </select>
       </div>
-      <div class="form-row"><label class="form-label">T-Shirt Size (Colonist & Governor)</label>
-        <select class="form-select"><option value="">No T-Shirt</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+      <div class="form-row" id="shirtRow"><label class="form-label">T-Shirt Size</label>
+        <select class="form-select" id="shirt"><option value="">No T-Shirt</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
       </div>
-      <button class="btn-main" style="width:100%;padding:17px;font-size:14px;" onclick="handleClaim()">Claim My Land — $<span id="btnPrice">29</span> →</button>
-      <div class="form-disclaimer">🔒 Stripe secured · Certificate issued instantly · 30-day money back<br>Novelty gift certificate. Not affiliated with NASA or SpaceX.</div>
+
+      <div class="price-summary">
+        <div class="price-summary-label">Total</div>
+        <div class="price-summary-amount">$<span id="totalPrice">29</span></div>
+      </div>
+
+      <button class="btn-main" style="width:100%;padding:18px;font-size:15px;" id="claimBtn" onclick="handleClaim()">
+        Claim My Land — $<span id="btnPrice">29</span> →
+      </button>
+      <div class="form-disclaimer">🔒 Secured by Stripe · Certificate emailed instantly · 30-day money back<br>Novelty gift certificate. Not affiliated with NASA or SpaceX.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>◆ MAP ◆</span></div>
+
+<!-- MAP -->
+<section class="section" id="map">
+  <div class="section-inner">
+    <div class="section-tag">Territory Map</div>
+    <h2 class="section-h">Your Land on the<br>Red Planet</h2>
+    <div class="map-wrap fade-up">
+      <div class="map-bar">
+        <div class="map-dots"><div class="mdot" style="background:#ff5f57"></div><div class="mdot" style="background:#febc2e"></div><div class="mdot" style="background:#28c840"></div></div>
+        <div class="map-label">NASA MOLA Topographic Data</div>
+        <div class="map-live"><div class="badge-dot"></div>LIVE</div>
+      </div>
+      <div class="map-canvas-wrap" id="mapWrap">
+        <canvas id="mc"></canvas>
+        <div class="scan"></div>
+        <div class="map-info"><div style="font-size:10px">NASA MOLA</div><div class="map-coords" id="coords">TAP TO EXPLORE</div></div>
+      </div>
+      <div class="map-cta">
+        <div class="map-cta-text"><strong id="mapStats">Loading...</strong>Tap the map to select your territory</div>
+        <a href="#claim" class="btn-main" style="font-size:11px;padding:11px 18px;white-space:nowrap;">Claim →</a>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="divider"><span>◆ REVIEWS ◆</span></div>
 
-<!-- SOCIAL PROOF -->
 <section class="section">
   <div class="section-inner">
     <div class="section-tag">Citizens Speak</div>
     <h2 class="section-h">Already on Mars</h2>
     <div class="quotes fade-up">
-      <div class="quote-card"><div class="quote-text">"Bought this as a gift for my husband who's obsessed with SpaceX. He framed it immediately. Best $29 I've ever spent."</div><div class="quote-author"><span class="quote-num">#003</span> Sarah K. · Texas</div></div>
-      <div class="quote-card"><div class="quote-text">"The QR verification makes it feel real. Got the Governor package and my name is literally on a Mars crater now."</div><div class="quote-author"><span class="quote-num">#007</span> Marcus R. · Berlin</div></div>
-      <div class="quote-card"><div class="quote-text">"Ordered for my team of 12. Everyone got their own citizen number. Huge hit at the office. T-shirts are great quality."</div><div class="quote-author"><span class="quote-num">#019</span> Yuki T. · Tokyo</div></div>
+      <div class="quote-card"><div class="quote-text">"Bought this as a gift for my husband who's obsessed with SpaceX. He framed the certificate immediately. Best $29 I've spent."</div><div class="quote-author"><span class="quote-num">#003</span> Sarah K. · Texas</div></div>
+      <div class="quote-card"><div class="quote-text">"The QR verification makes it feel real. Got the Governor package — my name is on a Mars crater now."</div><div class="quote-author"><span class="quote-num">#007</span> Marcus R. · Berlin</div></div>
+      <div class="quote-card"><div class="quote-text">"Ordered for my team of 12. Everyone got their own citizen number. Huge hit at the office."</div><div class="quote-author"><span class="quote-num">#019</span> Yuki T. · Tokyo</div></div>
     </div>
   </div>
 </section>
 
 <div class="divider"><span>◆ CITIZENS ◆</span></div>
 
-<!-- CITIZENS -->
 <section class="section" id="citizens">
   <div class="section-inner">
     <div class="section-tag">Public Registry</div>
     <h2 class="section-h">First Humans<br>on Mars</h2>
-    <div class="citizens-list fade-up" id="citizenList"></div>
-    <div style="text-align:center;margin-top:18px;"><a href="citizens.html" class="btn-ghost" style="display:inline-block;padding:11px 28px;">View All Citizens →</a></div>
-  </div>
-</section>
-
-<div class="divider"><span>◆ MERCH ◆</span></div>
-
-<!-- MERCH -->
-<section class="section" id="merch">
-  <div class="section-inner">
-    <div class="section-tag">Official Merch</div>
-    <h2 class="section-h">Wear Your<br>Citizen Number</h2>
-    <p class="section-p">Every item has your unique citizen number. Printed on demand. Ships worldwide.</p>
-    <div class="merch-grid fade-up">
-      <div class="merch-card"><div class="merch-icon">👕</div><div class="merch-name">Citizen T-Shirt</div><div class="merch-price">$32</div><div class="merch-sub">Your # on chest</div></div>
-      <div class="merch-card"><div class="merch-icon">🧥</div><div class="merch-name">Mars Hoodie</div><div class="merch-price">$58</div><div class="merch-sub">Heavy weight</div></div>
-      <div class="merch-card"><div class="merch-icon">🧢</div><div class="merch-name">Colony Cap</div><div class="merch-price">$28</div><div class="merch-sub">Embroidered #</div></div>
-      <div class="merch-card"><div class="merch-icon">🖼️</div><div class="merch-name">Framed Cert</div><div class="merch-price">$49</div><div class="merch-sub">Ready to hang</div></div>
-      <div class="merch-card"><div class="merch-icon">📔</div><div class="merch-name">Mars Passport</div><div class="merch-price">$19</div><div class="merch-sub">Physical booklet</div></div>
-      <div class="merch-card"><div class="merch-icon">📦</div><div class="merch-name">Colony Kit</div><div class="merch-price">$99</div><div class="merch-sub">Everything above</div></div>
-    </div>
-    <div style="text-align:center;margin-top:20px;"><a href="merch.html" class="btn-ghost" style="display:inline-block;padding:11px 36px;">Shop All Merch →</a></div>
+    <div class="citizens-list" id="citizenList"><div style="padding:24px;text-align:center;color:var(--dim);font-size:14px;">Loading registry...</div></div>
+    <div style="text-align:center;margin-top:18px;"><a href="citizens.html" class="btn-ghost" style="display:inline-block;padding:12px 32px;">View All Citizens →</a></div>
   </div>
 </section>
 
 <div class="divider"><span>◆ FAQ ◆</span></div>
 
-<!-- FAQ -->
 <section class="section">
   <div class="section-inner" style="max-width:660px;">
     <div class="section-tag">Questions</div>
     <h2 class="section-h">Frequently Asked</h2>
     <div class="faqs fade-up">
-      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">Is this real land ownership on Mars?<span class="faq-icon">+</span></div><div class="faq-a">MarsLand certificates are novelty gift certificates — the same concept as star naming registries. No current legal framework allows private Mars ownership under the 1967 Outer Space Treaty. Your number, coordinates, and registry entry are permanent and real.</div></div>
-      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">How is my citizen number guaranteed unique?<span class="faq-icon">+</span></div><div class="faq-a">Your number is assigned via auto-increment in our database, triggered only after Stripe payment is confirmed. Mathematically impossible for two people to share a number. The SHA-256 hash cryptographically proves authenticity.</div></div>
-      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">Can I verify my certificate is authentic?<span class="faq-icon">+</span></div><div class="faq-a">Yes — every certificate has a QR code linking to marslandspace.com/verify/[your-number]. Anyone can scan to confirm your name, coordinates, and registration date.</div></div>
-      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">Can I buy this as a gift?<span class="faq-icon">+</span></div><div class="faq-a">Absolutely — one of the most unique gifts for space fans. Enter the recipient's name during checkout and we'll generate the certificate in their name.</div></div>
+      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">Is this real land ownership on Mars?<span class="faq-icon">+</span></div><div class="faq-a">MarsLand certificates are novelty gift certificates — similar to star naming registries. No current legal framework allows private Mars ownership under the 1967 Outer Space Treaty. Your number, coordinates, and registry entry are permanent and unique.</div></div>
+      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">Why do some numbers cost more?<span class="faq-icon">+</span></div><div class="faq-a">Numbers #001–#100 are priced by rarity — just like early domain names or license plates. #001 is the first Mars citizen ever. Once purchased, that number can never belong to anyone else. Standard numbers (#101+) are assigned automatically and start at $9.</div></div>
+      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">How is my number guaranteed unique?<span class="faq-icon">+</span></div><div class="faq-a">Numbers are assigned via auto-increment in our database, triggered only after Stripe payment is confirmed. Premium numbers are reserved instantly when you begin checkout. The SHA-256 hash on your certificate cryptographically proves it's yours.</div></div>
+      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">Can I verify my certificate is authentic?<span class="faq-icon">+</span></div><div class="faq-a">Yes — every certificate has a QR code linking to marslandspace.com/verify.html. Anyone can scan to confirm your name, coordinates, and registration date. Your SHA-256 hash is also printed on the certificate and cannot be forged.</div></div>
+      <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">Can I buy this as a gift?<span class="faq-icon">+</span></div><div class="faq-a">Absolutely — one of the most unique gifts for space fans. Enter the recipient's name during checkout and we'll send the certificate to their email.</div></div>
       <div class="faq"><div class="faq-q" onclick="toggleFaq(this)">What is your refund policy?<span class="faq-icon">+</span></div><div class="faq-a">30-day money-back guarantee on digital certificates. Physical merch returnable within 14 days if unused.</div></div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
-      <div><div class="footer-logo">MARSLAND</div><div class="footer-desc">The first private Mars territory registry. Claim your land before humanity arrives.</div></div>
-      <div class="footer-col"><h4>Navigate</h4><a href="#map">Territory Map</a><a href="#pricing">Pricing</a><a href="citizens.html">Citizens</a><a href="merch.html">Merch</a><a href="verify.html">Verify</a></div>
-      <div class="footer-col"><h4>Follow</h4><a href="#">X / Twitter</a><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Discord</a></div>
+      <div><div class="footer-logo">MARSLAND</div><div class="footer-desc">The first private Mars territory registry. Claim your land before humanity arrives. Your number is forever.</div></div>
+      <div class="footer-col"><h4>Navigate</h4><a href="#premium">Premium Numbers</a><a href="#pricing">Packages</a><a href="citizens.html">Citizens</a><a href="merch.html">Merch</a><a href="verify.html">Verify</a></div>
+      <div class="footer-col"><h4>Follow</h4><a href="#">X / Twitter</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
     </div>
     <div class="footer-disclaimer">MarsLand is a novelty gift certificate and creative registry project. Not affiliated with NASA, SpaceX, or any government agency. For entertainment and community purposes only.</div>
     <div class="footer-bottom"><span>© 2025 MarsLand · marslandspace.com</span><span><a href="#" style="color:var(--dim);text-decoration:none">Terms</a> · <a href="#" style="color:var(--dim);text-decoration:none">Privacy</a></span></div>
   </div>
 </footer>
 
-<!-- STICKY CTA (mobile only) -->
 <div class="sticky-cta">
   <div class="sticky-inner">
     <div class="sticky-price">from $9<small>one-time</small></div>
@@ -480,26 +504,218 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:44
   </div>
 </div>
 
-<!-- NOTIFICATION -->
 <div class="notif" id="notif"><div class="notif-title" id="notifTitle">New Citizen!</div><div class="notif-body" id="notifBody">Someone just claimed land.</div></div>
 
 <script>
+const API = ''; // Empty = same domain. Change to your Vercel URL if needed
+
 // Stars
 const sf=document.getElementById('stars');
 for(let i=0;i<130;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2+.5;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*5}s;animation-delay:${Math.random()*5}s;`;sf.appendChild(s);}
 
-// Counter
-let count=247;
-function updateCount(){
-  document.getElementById('liveCount').textContent=count;
-  document.getElementById('nextNum').textContent=count+1;
-  document.getElementById('nextNum2').textContent=count+1;
-  document.getElementById('certNum').textContent=count+1;
-  document.getElementById('urgCount').textContent=count;
-  document.getElementById('spotsLeft').textContent=(10000-count).toLocaleString()+' left';
-  document.getElementById('progressFill').style.width=(count/10000*100)+'%';
+// State
+let selectedNumber = null;
+let selectedTier = 'standard';
+let selectedPrice = 29;
+let selectedPkg = 'colonist';
+let totalCitizens = 0;
+
+// Load data from API
+async function loadData() {
+  try {
+    const res = await fetch(`${API}/api/numbers`);
+    const data = await res.json();
+    totalCitizens = data.totalCitizens || 247;
+    updateCounterUI(totalCitizens, data.spotsLeft || 9753);
+    renderPremiumNumbers(data.premium || []);
+    // Set default standard number
+    if (!selectedNumber) {
+      selectedNumber = data.nextStandard || 248;
+      updateSelectedDisplay(selectedNumber, 'standard', 29);
+    }
+    document.getElementById('mapStats').textContent = `${totalCitizens} parcels claimed · ${data.spotsLeft || 9753} available`;
+  } catch(e) {
+    // Fallback to demo data
+    totalCitizens = 247;
+    updateCounterUI(247, 9753);
+    renderPremiumNumbersFallback();
+    selectedNumber = 248;
+    updateSelectedDisplay(248, 'standard', 29);
+    document.getElementById('mapStats').textContent = '247 parcels claimed · 9,753 available';
+  }
 }
-updateCount();
+
+function updateCounterUI(count, spotsLeft) {
+  document.getElementById('liveCount').textContent = count;
+  document.getElementById('spotsLeft').textContent = (spotsLeft).toLocaleString() + ' left';
+  document.getElementById('progressFill').style.width = (count/10000*100) + '%';
+}
+
+function renderPremiumNumbers(premiumList) {
+  const eliteEl = document.getElementById('eliteNumbers');
+  const premiumEl = document.getElementById('premiumNumbers');
+  const selectEl = document.getElementById('selectNumbers');
+  eliteEl.innerHTML = ''; premiumEl.innerHTML = ''; selectEl.innerHTML = '';
+
+  for (let n = 1; n <= 100; n++) {
+    const prem = premiumList.find(p => p.number === n);
+    const available = prem ? prem.available !== false : true;
+    const tier = n <= 10 ? 'elite' : n <= 50 ? 'premium' : 'select';
+    const price = n <= 10 ? 1000 : n <= 50 ? 500 : 199;
+    const label = String(n).padStart(3,'0');
+    const btn = document.createElement('button');
+    btn.className = 'num-btn' + (!available ? ' sold' : '');
+    btn.textContent = '#' + label;
+    btn.disabled = !available;
+    if (available) {
+      btn.onclick = () => selectPremiumNumber(n, tier, price, btn);
+    }
+    if (n <= 10) eliteEl.appendChild(btn);
+    else if (n <= 50) premiumEl.appendChild(btn);
+    else selectEl.appendChild(btn);
+  }
+}
+
+function renderPremiumNumbersFallback() {
+  // Demo: show first few as sold, rest available
+  const sold = [1, 3, 7];
+  for (let n = 1; n <= 100; n++) {
+    const isSold = sold.includes(n);
+    const tier = n <= 10 ? 'elite' : n <= 50 ? 'premium' : 'select';
+    const price = n <= 10 ? 1000 : n <= 50 ? 500 : 199;
+    const label = String(n).padStart(3,'0');
+    const btn = document.createElement('button');
+    btn.className = 'num-btn' + (isSold ? ' sold' : '');
+    btn.textContent = '#' + label;
+    btn.disabled = isSold;
+    if (!isSold) btn.onclick = () => selectPremiumNumber(n, tier, price, btn);
+    const container = n <= 10 ? 'eliteNumbers' : n <= 50 ? 'premiumNumbers' : 'selectNumbers';
+    document.getElementById(container).appendChild(btn);
+  }
+}
+
+function selectPremiumNumber(num, tier, price, btn) {
+  // Deselect all
+  document.querySelectorAll('.num-btn.selected').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedNumber = num;
+  selectedTier = tier;
+  selectedPrice = price;
+  // Hide standard package selector for premium
+  document.getElementById('pkgRow').style.display = 'none';
+  document.getElementById('shirtRow').style.display = 'none';
+  updateSelectedDisplay(num, tier, price);
+  scrollToClaim();
+}
+
+function selectStandardPkg(pkg, price) {
+  selectedPkg = pkg;
+  selectedPrice = price;
+  selectedTier = 'standard';
+  document.getElementById('pkg').value = pkg;
+  // Clear premium selection
+  document.querySelectorAll('.num-btn.selected').forEach(b => b.classList.remove('selected'));
+  selectedNumber = null; // Will be assigned after payment
+  document.getElementById('pkgRow').style.display = 'block';
+  document.getElementById('shirtRow').style.display = pkg !== 'pioneer' ? 'block' : 'none';
+  updateSelectedDisplay('AUTO', 'standard', price);
+  updatePrice();
+  scrollToClaim();
+}
+
+function updateSelectedDisplay(num, tier, price) {
+  const numStr = num === 'AUTO' ? '?' : String(num).padStart(3,'0');
+  document.getElementById('selectedNumDisplay').textContent = num === 'AUTO' ? '?' : String(num).padStart(3,'0');
+  const labels = {
+    elite: `Elite #${numStr} — $${price.toLocaleString()}`,
+    premium: `Premium #${numStr} — $${price.toLocaleString()}`,
+    select: `Select #${numStr} — $${price.toLocaleString()}`,
+    standard: num === 'AUTO' ? 'Auto-assigned (#101+)' : `Standard #${numStr}`
+  };
+  document.getElementById('selectedNumLabel').textContent = labels[tier] || labels.standard;
+  const badge = document.getElementById('selectedTierBadge');
+  badge.textContent = tier === 'standard' ? 'Standard' : tier.charAt(0).toUpperCase() + tier.slice(1);
+  badge.className = 'snd-tier ' + (tier === 'elite' ? 'elite' : 'standard');
+  document.getElementById('totalPrice').textContent = price.toLocaleString();
+  document.getElementById('btnPrice').textContent = price.toLocaleString();
+  selectedPrice = price;
+}
+
+function updatePrice() {
+  const sel = document.getElementById('pkg');
+  const opt = sel.options[sel.selectedIndex];
+  const price = parseInt(opt.dataset.price);
+  selectedPrice = price;
+  document.getElementById('totalPrice').textContent = price;
+  document.getElementById('btnPrice').textContent = price;
+  document.getElementById('shirtRow').style.display = (sel.value !== 'pioneer') ? 'block' : 'none';
+}
+
+function scrollToClaim() {
+  setTimeout(() => document.getElementById('claim').scrollIntoView({behavior:'smooth'}), 100);
+}
+
+// Claim handler
+async function handleClaim() {
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const display = document.getElementById('display').value.trim() || `${fn} ${ln[0]}.`;
+  const region = document.getElementById('region').value;
+  const shirt = document.getElementById('shirt').value;
+  const errEl = document.getElementById('formError');
+
+  errEl.classList.remove('show');
+
+  if (!fn || !ln) { showError('Please enter your first and last name.'); return; }
+  if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { showError('Please enter a valid email address.'); return; }
+  if (!selectedNumber && selectedTier === 'premium') { showError('Please select a citizen number above.'); return; }
+
+  const btn = document.getElementById('claimBtn');
+  btn.textContent = 'Connecting to Stripe...';
+  btn.classList.add('loading');
+
+  try {
+    const body = {
+      firstName: fn, lastName: ln, displayName: display,
+      email: em, region, shirtSize: shirt,
+      package: selectedPkg
+    };
+    if (selectedNumber && selectedTier !== 'standard') {
+      body.citizenNumber = selectedNumber;
+    }
+
+    const res = await fetch(`${API}/api/checkout`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      showError(data.error || 'Something went wrong. Please try again.');
+      btn.textContent = `Claim My Land — $${selectedPrice.toLocaleString()} →`;
+      btn.classList.remove('loading');
+      return;
+    }
+
+    // Redirect to Stripe
+    window.location.href = data.url;
+
+  } catch(e) {
+    showError('Connection error. Please check your internet and try again.');
+    btn.innerHTML = `Claim My Land — $<span id="btnPrice">${selectedPrice}</span> →`;
+    btn.classList.remove('loading');
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('formError');
+  el.textContent = msg;
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
 
 // Ticker
 const tNames=[{n:'A. Chen',r:'Olympus Mons'},{n:'M. Rodriguez',r:'Valles Marineris'},{n:'J. Park',r:'Hellas Basin'},{n:'S. Williams',r:'Tharsis'},{n:'K. Müller',r:'Arcadia'},{n:'L. Ivanov',r:'Valles Marineris'},{n:'Y. Tanaka',r:'Olympus Mons'},{n:'B. Osei',r:'Hellas Basin'}];
@@ -510,7 +726,7 @@ const ti=document.getElementById('tickerInner');
 const canvas=document.getElementById('mc');
 const ctx=canvas.getContext('2d');
 const wrap=document.getElementById('mapWrap');
-const parcels=[{x:.12,y:.3,o:'A. Chen'},{x:.28,y:.55,o:'M. Rodriguez'},{x:.45,y:.2,o:'J. Park'},{x:.6,y:.65,o:'S. Williams'},{x:.75,y:.4,o:'K. Müller'},{x:.88,y:.7,o:'L. Ivanov'},{x:.35,y:.8,o:'T. Nakamura'},{x:.2,y:.6,o:'Y. Tanaka'},{x:.55,y:.45,o:'B. Osei'},{x:.7,y:.2,o:'C. Novak'}];
+const parcels=[{x:.12,y:.3,o:'A. Chen'},{x:.28,y:.55,o:'M. Rodriguez'},{x:.45,y:.2,o:'J. Park'},{x:.6,y:.65,o:'S. Williams'},{x:.75,y:.4,o:'K. Müller'},{x:.88,y:.7,o:'L. Ivanov'},{x:.35,y:.8,o:'T. Nakamura'},{x:.2,y:.6,o:'Y. Tanaka'}];
 function drawMap(){
   const w=wrap.offsetWidth,h=wrap.offsetHeight;
   canvas.width=w;canvas.height=h;
@@ -524,9 +740,9 @@ function drawMap(){
   [['OLYMPUS MONS',.08,.2],['VALLES MARINERIS',.32,.47],['HELLAS BASIN',.63,.71],['THARSIS',.18,.62]].forEach(([n,x,y])=>ctx.fillText(n,x*w,y*h));
   parcels.forEach((p,i)=>{
     const px=p.x*w,py=p.y*h,sz=13;
-    const gw=ctx.createRadialGradient(px,py,0,px,py,sz*2.5);gw.addColorStop(0,'rgba(255,107,53,.22)');gw.addColorStop(1,'transparent');ctx.fillStyle=gw;ctx.fillRect(px-sz*2.5,py-sz*2.5,sz*5,sz*5);
-    ctx.strokeStyle='rgba(255,107,53,.7)';ctx.lineWidth=1;ctx.strokeRect(px-sz/2,py-sz/2,sz,sz);
-    ctx.fillStyle='rgba(193,68,14,.3)';ctx.fillRect(px-sz/2,py-sz/2,sz,sz);
+    const gw=ctx.createRadialGradient(px,py,0,px,py,sz*2.5);gw.addColorStop(0,'rgba(255,107,53,.2)');gw.addColorStop(1,'transparent');ctx.fillStyle=gw;ctx.fillRect(px-sz*2.5,py-sz*2.5,sz*5,sz*5);
+    ctx.strokeStyle='rgba(255,107,53,.65)';ctx.lineWidth=1;ctx.strokeRect(px-sz/2,py-sz/2,sz,sz);
+    ctx.fillStyle='rgba(193,68,14,.28)';ctx.fillRect(px-sz/2,py-sz/2,sz,sz);
     ctx.fillStyle='#ff7f40';ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fill();
     ctx.font='bold 7px sans-serif';ctx.fillStyle='#ff7f40';ctx.fillText('#'+String(i+1).padStart(3,'0'),px+8,py-2);
   });
@@ -534,39 +750,53 @@ function drawMap(){
 drawMap();
 window.addEventListener('resize',drawMap);
 wrap.addEventListener('mousemove',e=>{const r=wrap.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;const lat=((.5-my/r.height)*90).toFixed(2),lon=((mx/r.width-.5)*360).toFixed(2);document.getElementById('coords').textContent=`${Math.abs(lat)}°${lat>=0?'N':'S'} · ${Math.abs(lon)}°${lon>=0?'E':'W'}`;});
-wrap.addEventListener('touchstart',e=>{const r=wrap.getBoundingClientRect(),t=e.touches[0],lat=((.5-(t.clientY-r.top)/r.height)*90).toFixed(2),lon=(((t.clientX-r.left)/r.width-.5)*360).toFixed(2);document.getElementById('coords').textContent=`${Math.abs(lat)}°${lat>=0?'N':'S'} · ${Math.abs(lon)}°${lon>=0?'E':'W'}`;document.getElementById('claim').scrollIntoView({behavior:'smooth'});},{passive:true});
+wrap.addEventListener('touchstart',e=>{const r=wrap.getBoundingClientRect(),t=e.touches[0];document.getElementById('coords').textContent='Tap to claim →';document.getElementById('claim').scrollIntoView({behavior:'smooth'});},{passive:true});
 wrap.addEventListener('click',()=>document.getElementById('claim').scrollIntoView({behavior:'smooth'}));
 
-// Citizens
-const cData=[{id:1,n:'A. Chen',r:'Olympus Mons',b:'founder'},{id:2,n:'M. Rodriguez',r:'Valles Marineris',b:'founder'},{id:3,n:'J. Park',r:'Hellas Basin',b:'founder'},{id:4,n:'S. Williams',r:'Tharsis Plateau',b:''},{id:5,n:'K. Müller',r:'Arcadia Planitia',b:''},{id:6,n:'L. Ivanov',r:'Valles Marineris',b:''},{id:7,n:'T. Nakamura',r:'Olympus Mons',b:''}];
-const cl=document.getElementById('citizenList');
-cData.forEach(c=>{cl.innerHTML+=`<div class="citizen-row"><div class="c-id">#${String(c.id).padStart(3,'0')}</div><div><div class="c-name">${c.n}</div><div class="c-region">${c.r}</div></div><div>${c.b?`<span class="c-badge founder">Founder</span>`:`<span style="color:var(--green);font-size:11px;">✓</span>`}</div></div>`;});
-cl.innerHTML+=`<div class="citizens-more">Showing 7 of 247 · <a href="citizens.html">View all →</a></div>`;
+// Citizens (load from API)
+async function loadCitizens() {
+  try {
+    const res = await fetch(`${API}/api/citizens?page=1`);
+    const data = await res.json();
+    renderCitizens(data.citizens || []);
+  } catch(e) {
+    renderCitizensFallback();
+  }
+}
+
+function renderCitizens(list) {
+  const cl = document.getElementById('citizenList');
+  if (!list.length) { cl.innerHTML = '<div style="padding:24px;text-align:center;color:var(--dim);font-size:14px;">Be the first citizen!</div>'; return; }
+  cl.innerHTML = list.slice(0,7).map(c => `
+    <div class="citizen-row">
+      <div class="c-id">#${String(c.citizen_number).padStart(3,'0')}</div>
+      <div><div class="c-name">${c.display_name}</div><div class="c-region">${c.region}</div></div>
+      <div>${c.tier !== 'standard' ? `<span class="c-badge founder">${c.tier}</span>` : `<span style="color:var(--green);font-size:12px;">✓</span>`}</div>
+    </div>
+  `).join('') + `<div style="padding:14px;text-align:center;font-size:13px;color:var(--muted);border-top:1px solid var(--border)">Showing ${Math.min(list.length,7)} of ${totalCitizens} citizens · <a href="citizens.html" style="color:var(--orange);text-decoration:none;">View all →</a></div>`;
+}
+
+function renderCitizensFallback() {
+  const demo=[{citizen_number:1,display_name:'A. Chen',region:'Olympus Mons',tier:'elite'},{citizen_number:2,display_name:'M. Rodriguez',region:'Valles Marineris',tier:'premium'},{citizen_number:3,display_name:'J. Park',region:'Hellas Basin',tier:'elite'},{citizen_number:4,display_name:'S. Williams',region:'Tharsis',tier:'standard'},{citizen_number:5,display_name:'K. Müller',region:'Arcadia',tier:'standard'}];
+  renderCitizens(demo);
+}
 
 // FAQ
 function toggleFaq(el){const f=el.parentElement,o=f.classList.contains('open');document.querySelectorAll('.faq').forEach(x=>x.classList.remove('open'));if(!o)f.classList.add('open');}
 
-// Claim
-function handleClaim(){
-  const fn=document.getElementById('firstName').value,em=document.getElementById('email').value;
-  if(!fn||!em){showNotif('Missing info','Please enter your name and email.');return;}
-  // TODO: window.location.href='https://buy.stripe.com/YOUR_LINK';
-  showNotif('Connecting to Stripe...','Secure payment processing');
-  setTimeout(()=>alert('Add your Stripe payment link:\nReplace the TODO in handleClaim()'),800);
-}
-
 // Notifications
 function showNotif(t,b){document.getElementById('notifTitle').textContent=t;document.getElementById('notifBody').textContent=b;const n=document.getElementById('notif');n.classList.add('show');setTimeout(()=>n.classList.remove('show'),5000);}
-const newNames=['A. Kim','D. Okonkwo','F. Rossi','C. Santos','H. Zhang','N. Patel','R. Osei'];
-function simNew(){count++;updateCount();showNotif('New Citizen #'+count,newNames[Math.floor(Math.random()*newNames.length)]+' just claimed land on Mars!');setTimeout(simNew,12000+Math.random()*20000);}
-setTimeout(simNew,8000);
+const newNames=['A. Kim','D. Okonkwo','F. Rossi','C. Santos','H. Zhang','N. Patel'];
+function simNew(){totalCitizens++;updateCounterUI(totalCitizens,10000-totalCitizens);showNotif('New Citizen #'+totalCitizens,newNames[Math.floor(Math.random()*newNames.length)]+' just claimed land on Mars!');setTimeout(simNew,15000+Math.random()*25000);}
+setTimeout(simNew,9000);
 
-// Fade-up
+// Scroll animations
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.08});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 
-// Progress bar animate on load
-setTimeout(()=>document.getElementById('progressFill').style.width='2.47%',300);
+// Init
+loadData();
+loadCitizens();
 </script>
 </body>
 </html>
