@@ -1,16 +1,11 @@
-// api/numbers.js
-// GET /api/numbers - returns premium available numbers + next standard number
-// Deploy on Vercel as serverless function
-
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
 
-export default async function handler(req, res) {
-  // CORS
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
 
@@ -19,37 +14,30 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Get available premium numbers
     const { data: premiumNumbers, error: premError } = await supabase
       .from('premium_numbers')
-      .select('number, tier, price_cents, stripe_price_id')
-      .eq('available', true)
+      .select('number, tier, price_cents, stripe_price_id, available')
       .order('number', { ascending: true });
 
     if (premError) throw premError;
 
-    // Get next standard number (101+)
-    const { data: nextData, error: nextError } = await supabase
-      .rpc('get_next_standard_number');
-
-    if (nextError) throw nextError;
-
-    // Get total citizen count
     const { count, error: countError } = await supabase
       .from('citizens')
       .select('*', { count: 'exact', head: true });
 
     if (countError) throw countError;
 
+    const total = count || 0;
+
     return res.status(200).json({
       premium: premiumNumbers || [],
-      nextStandard: nextData || 101,
-      totalCitizens: count || 0,
-      spotsLeft: 10000 - (count || 0)
+      nextStandard: Math.max(101, total + 101),
+      totalCitizens: total,
+      spotsLeft: 10000 - total
     });
 
   } catch (err) {
-    console.error('Numbers API error:', err);
-    return res.status(500).json({ error: 'Failed to fetch numbers' });
+    console.error('Numbers API error:', err.message);
+    return res.status(500).json({ error: 'Failed to fetch numbers', detail: err.message });
   }
-}
+};

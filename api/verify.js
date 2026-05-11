@@ -1,16 +1,12 @@
-// api/verify.js
-// GET /api/verify?id=001 - verifies a citizen certificate
-
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-
   if (req.method !== 'GET') return res.status(405).end();
 
   const { id } = req.query;
@@ -44,4 +40,4 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ error: 'Verification failed' });
   }
-}
+};

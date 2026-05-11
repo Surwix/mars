@@ -1,14 +1,11 @@
-// api/citizens.js
-// GET /api/citizens?page=1&region=all - public citizens list
-
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method !== 'GET') return res.status(405).end();
 
@@ -38,6 +35,7 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
+    console.error('Citizens API error:', err.message);
     return res.status(500).json({ error: 'Failed to fetch citizens' });
   }
-}
+};
